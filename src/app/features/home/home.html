@@ -1,0 +1,77 @@
+<main class="home">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero__text">
+      <h1 class="hero__heading">
+        Arte nigeriano,<br />
+        sin fronteras.
+      </h1>
+      <p class="hero__lead">
+        Naijart lleva la obra de artistas nigerianos a los espacios y a los públicos de Europa.
+      </p>
+      <div class="hero__actions">
+        <a routerLink="/galeria" class="btn btn-primary">Ver la galería</a>
+        <a routerLink="/unete" class="btn btn-ghost">Únete a la comunidad</a>
+      </div>
+    </div>
+
+    <div class="hero__mark" aria-hidden="true">
+      <img
+        src="/images/logo/logo.png"
+        alt=""
+        class="hero__logo"
+      />
+    </div>
+  </section>
+
+  <!-- GALERÍA -->
+  <section class="gallery-preview">
+    <div class="gallery-preview__header">
+      <h2>Desde el pincel al espacio</h2>
+      <a routerLink="/galeria" class="gallery-preview__link">Ver galería completa</a>
+    </div>
+
+    <ul class="gallery-preview__track">
+      <li
+        class="gallery-preview__card"
+        *ngFor="let item of galleryPreview"
+        [class]="'gallery-preview__card--' + item.accent"
+      >
+        <div class="gallery-preview__placeholder"></div>
+        <p class="gallery-preview__title">{{ item.title }}</p>
+        <p class="gallery-preview__artist">{{ item.artist }}</p>
+      </li>
+    </ul>
+  </section>
+
+  <!-- CALENDARIO -->
+  <section class="events-preview">
+    <h2>Próximas citas</h2>
+
+    <ul class="events-preview__list">
+      <li class="events-preview__item" *ngFor="let event of upcomingEvents">
+        <div class="events-preview__date">
+          <span class="events-preview__day">{{ event.day }}</span>
+          <span class="events-preview__month">{{ event.month }}</span>
+        </div>
+        <div class="events-preview__info">
+          <p class="events-preview__title">{{ event.title }}</p>
+          <p class="events-preview__location">{{ event.location }}</p>
+        </div>
+      </li>
+    </ul>
+
+    <a routerLink="/calendario" class="events-preview__link">Ver calendario completo</a>
+  </section>
+
+  <!-- CTA ÚNETE -->
+  <section class="join-cta">
+    <h2 class="join-cta__heading">Súmate a Naijart</h2>
+    <p class="join-cta__lead">
+      Somos artistas, organizadores y amigos del arte trabajando juntos para abrir camino en Europa.
+    </p>
+    <a routerLink="/unete" class="btn btn-primary btn-lg">Únete ahora</a>
+  </section>
+
+</main>

@@ -1,0 +1,75 @@
+<header class="header" [class.header--scrolled]="isScrolled()">
+  <div class="header__inner">
+    <a routerLink="/" class="header__logo" (click)="closeMenu()">
+      <img src="/images/logo/logo.jpeg" alt="Naijart" class="header__logo-img" />
+      <span class="header__logo-text">Naijart</span>
+    </a>
+
+    <nav class="header__nav" aria-label="Navegación principal">
+      @for (link of navLinks; track link.path) {
+        <a
+          [routerLink]="link.path"
+          routerLinkActive="header__link--active"
+          class="header__link"
+        >{{ link.label }}</a>
+      }
+    </nav>
+
+    <div class="header__actions">
+      <div class="header__lang" role="group" aria-label="Selector de idioma">
+        @for (lang of languages; track lang) {
+          <button
+            type="button"
+            class="header__lang-btn"
+            [class.header__lang-btn--active]="currentLang() === lang"
+            (click)="setLang(lang)"
+          >{{ lang | uppercase }}</button>
+        }
+      </div>
+
+      <a routerLink="/login" class="btn btn--ghost btn--sm header__login">Log in</a>
+
+      <button
+        type="button"
+        class="header__burger"
+        [class.header__burger--open]="isMenuOpen()"
+        (click)="toggleMenu()"
+        [attr.aria-expanded]="isMenuOpen()"
+        aria-controls="mobile-menu"
+        aria-label="Abrir menú"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="header__mobile" id="mobile-menu" [class.header__mobile--open]="isMenuOpen()">
+    <nav class="header__mobile-nav" aria-label="Navegación móvil">
+      @for (link of navLinks; track link.path) {
+        <a
+          [routerLink]="link.path"
+          routerLinkActive="header__mobile-link--active"
+          class="header__mobile-link"
+          (click)="closeMenu()"
+        >{{ link.label }}</a>
+      }
+    </nav>
+
+    <div class="header__mobile-footer">
+      <div class="header__lang header__lang--mobile" role="group" aria-label="Selector de idioma">
+        @for (lang of languages; track lang) {
+          <button
+            type="button"
+            class="header__lang-btn"
+            [class.header__lang-btn--active]="currentLang() === lang"
+            (click)="setLang(lang)"
+          >{{ lang | uppercase }}</button>
+        }
+      </div>
+
+      <a routerLink="/login" class="btn btn--ghost btn--sm" (click)="closeMenu()">Log in</a>
+    </div>
+  </div>
+</header>

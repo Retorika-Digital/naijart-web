@@ -1,0 +1,268 @@
+// src/app/features/home/home.scss
+// Ajusta las rutas de @use si la ubicación real del componente difiere
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+.home {
+  display: flex;
+  flex-direction: column;
+}
+
+// ===== HERO =====
+.hero {
+  background-color: var(--color-black);
+  padding-block: var(--space-12) var(--space-16);
+  @include container;
+
+  display: grid;
+  gap: var(--space-8);
+  align-items: center;
+
+  @include respond(desktop) {
+    grid-template-columns: 1.1fr 0.9fr;
+    padding-block: var(--space-16);
+  }
+}
+
+.hero__heading {
+  font-family: var(--font-heading);
+  font-size: var(--fs-h1);
+  line-height: var(--lh-heading);
+  color: var(--color-white);
+  margin: 0 0 var(--space-6);
+
+  @include respond(desktop) {
+    font-size: 3.75rem;
+  }
+}
+
+.hero__lead {
+  font-family: var(--font-body);
+  font-size: var(--fs-h5);
+  line-height: var(--lh-body);
+  color: var(--color-gray-300);
+  max-width: 42ch;
+  margin: 0 0 var(--space-8);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.hero__mark {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  // mancha dorada difusa detrás del logo — anticipa el efecto
+  // "mancha de tinta dorada" que se animará en una pasada posterior
+  &::before {
+    content: '';
+    position: absolute;
+    width: 70%;
+    aspect-ratio: 1;
+    background: radial-gradient(circle, var(--color-gold-500) 0%, transparent 70%);
+    opacity: 0.25;
+    filter: blur(40px);
+  }
+}
+
+.hero__logo {
+  position: relative;
+  width: min(320px, 70%);
+  height: auto;
+}
+
+// ===== GALERÍA PREVIEW =====
+.gallery-preview {
+  padding-block: var(--space-12);
+  background-color: var(--color-gray-900);
+}
+
+.gallery-preview__header {
+  @include container;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: var(--space-6);
+
+  h2 {
+    font-family: var(--font-heading);
+    font-size: var(--fs-h2);
+    color: var(--color-white);
+    margin: 0;
+  }
+}
+
+.gallery-preview__link {
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  color: var(--color-gold-300);
+  text-decoration: none;
+  white-space: nowrap;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  @include focus-ring;
+}
+
+.gallery-preview__track {
+  display: flex;
+  gap: var(--space-4);
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  padding-inline: var(--container-gutter);
+  padding-bottom: var(--space-2);
+  list-style: none;
+  margin: 0;
+
+  // oculta la barra en navegadores WebKit sin depender de _scrollbar.scss
+  // (ese parcial ya cubre el resto de scrolls del sitio)
+  &::-webkit-scrollbar {
+    height: 6px;
+  }
+}
+
+.gallery-preview__card {
+  flex: 0 0 auto;
+  width: 220px;
+  scroll-snap-align: start;
+  @include hover-zoom(1.04);
+}
+
+.gallery-preview__placeholder {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-2);
+  background: linear-gradient(135deg, var(--color-gray-700), var(--color-black));
+}
+
+.gallery-preview__card--green .gallery-preview__placeholder {
+  background: linear-gradient(135deg, var(--color-green-700), var(--color-black));
+}
+
+.gallery-preview__card--gold .gallery-preview__placeholder {
+  background: linear-gradient(135deg, var(--color-gold-700), var(--color-black));
+}
+
+.gallery-preview__card--blue .gallery-preview__placeholder {
+  background: linear-gradient(135deg, var(--color-blue-700), var(--color-black));
+}
+
+.gallery-preview__title {
+  font-family: var(--font-body);
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-small);
+  color: var(--color-white);
+  margin: 0;
+}
+
+.gallery-preview__artist {
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  color: var(--color-gray-500);
+  margin: 0;
+}
+
+// ===== CALENDARIO PREVIEW =====
+.events-preview {
+  @include container;
+  padding-block: var(--space-12);
+
+  h2 {
+    font-family: var(--font-heading);
+    font-size: var(--fs-h2);
+    color: var(--color-white);
+    margin: 0 0 var(--space-6);
+  }
+}
+
+.events-preview__list {
+  list-style: none;
+  margin: 0 0 var(--space-6);
+  padding: 0;
+  border-top: 1px solid var(--color-gray-700);
+}
+
+.events-preview__item {
+  display: flex;
+  gap: var(--space-6);
+  align-items: center;
+  padding-block: var(--space-4);
+  border-bottom: 1px solid var(--color-gray-700);
+}
+
+.events-preview__date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 3.5rem;
+  color: var(--color-gold-500);
+}
+
+.events-preview__day {
+  font-family: var(--font-heading);
+  font-size: var(--fs-h3);
+  line-height: 1;
+}
+
+.events-preview__month {
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+}
+
+.events-preview__title {
+  font-family: var(--font-body);
+  font-weight: var(--fw-semibold);
+  color: var(--color-white);
+  margin: 0;
+}
+
+.events-preview__location {
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  color: var(--color-gray-500);
+  margin: 0;
+}
+
+.events-preview__link {
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  color: var(--color-gold-300);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  @include focus-ring;
+}
+
+// ===== CTA ÚNETE =====
+.join-cta {
+  background-color: var(--color-gold-500);
+  padding-block: var(--space-16);
+  text-align: center;
+  @include flex-center(column);
+}
+
+.join-cta__heading {
+  font-family: var(--font-heading);
+  font-size: var(--fs-h2);
+  color: var(--color-black);
+  margin: 0 0 var(--space-4);
+}
+
+.join-cta__lead {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  color: var(--color-green-900);
+  max-width: 48ch;
+  margin: 0 0 var(--space-8);
+}

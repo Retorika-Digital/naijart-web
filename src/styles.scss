@@ -1,1 +1,9 @@
-/* You can add global styles to this file, and also import other style files */
+// src/styles.scss
+@use 'styles/variables';
+@use 'styles/mixins';
+@use 'styles/reset';
+@use 'styles/typography';
+@use 'styles/buttons';
+@use 'styles/forms';
+@use 'styles/animations';
+@use 'styles/scrollbar';

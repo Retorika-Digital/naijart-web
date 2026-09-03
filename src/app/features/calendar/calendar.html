@@ -1,4 +1,17 @@
 <section class="calendar">
+
+  <div class="calendar__upcoming">
+    <h3 class="calendar__upcoming-title">Próximos eventos</h3>
+    <ul class="calendar__upcoming-list">
+      @for (event of events; track event.id) {
+        <li class="calendar__upcoming-item" (click)="openEvent(event)">
+          <span class="calendar__upcoming-date">{{ formatEventDate(event.date) }}</span>
+          <span class="calendar__upcoming-name">{{ event.title }}</span>
+        </li>
+      }
+    </ul>
+  </div>
+
   <div class="calendar__header">
     <button type="button" class="calendar__nav" (click)="prevMonth()" aria-label="Mes anterior">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -40,17 +53,6 @@
     }
   </div>
 
-  <div class="calendar__upcoming">
-    <h3 class="calendar__upcoming-title">Próximos eventos</h3>
-    <ul class="calendar__upcoming-list">
-      @for (event of events; track event.id) {
-        <li class="calendar__upcoming-item" (click)="openEvent(event)">
-          <span class="calendar__upcoming-date">{{ formatEventDate(event.date) }}</span>
-          <span class="calendar__upcoming-name">{{ event.title }}</span>
-        </li>
-      }
-    </ul>
-  </div>
 </section>
 
 @if (selectedEvent(); as event) {

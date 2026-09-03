@@ -32,7 +32,7 @@ export class Header {
   protected readonly navLinks: NavLink[] = [
     { label: 'Galería', path: '/galeria' },
     { label: 'Calendario', path: '/calendario' },
-    { label: 'Equipo', path: '/equipo' },
+    { label: 'Quienes somos', path: '/quienes-somos' },
     { label: 'Únete', path: '/unete' },
     { label: 'Contáctanos', path: '/contacto' },
   ];

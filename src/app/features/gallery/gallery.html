@@ -1,1 +1,80 @@
-<p>gallery works!</p>
+<section class="gallery">
+  <div class="gallery__container">
+
+    <header class="gallery__header">
+      <h1>Galería</h1>
+      <p>Descubre las obras de nuestros artistas</p>
+    </header>
+
+    <nav class="gallery__filters" aria-label="Filtrar por categoría">
+      @for (cat of categories(); track cat) {
+        <button
+          type="button"
+          class="gallery__filter-pill"
+          [class.gallery__filter-pill--active]="selectedCategory() === cat"
+          (click)="selectCategory(cat)">
+          {{ cat }}
+        </button>
+      }
+    </nav>
+
+    <div class="gallery__masonry">
+      @for (artwork of filteredArtworks(); track artwork.id) {
+        <article
+          class="gallery__card"
+          tabindex="0"
+          role="button"
+          [attr.aria-label]="'Ver obra ' + artwork.title"
+          (click)="openLightbox(artwork)"
+          (keydown.enter)="openLightbox(artwork)">
+          <img
+            class="gallery__image"
+            [src]="artwork.image"
+            [alt]="artwork.title"
+            loading="lazy" />
+          <div class="gallery__overlay">
+            <h3 class="gallery__overlay-title">{{ artwork.title }}</h3>
+            <p class="gallery__overlay-artist">{{ artwork.artist }}</p>
+          </div>
+        </article>
+      } @empty {
+        <p class="gallery__empty">No hay obras en esta categoría todavía.</p>
+      }
+    </div>
+
+  </div>
+
+  @if (lightboxOpen() && currentArtwork(); as artwork) {
+    <div class="lightbox" (click)="closeLightbox()">
+
+      <button class="lightbox__close" type="button" aria-label="Cerrar" (click)="closeLightbox()">&times;</button>
+
+      <button
+        class="lightbox__nav lightbox__nav--prev"
+        type="button"
+        aria-label="Obra anterior"
+        (click)="prev(); $event.stopPropagation()">
+        &#8249;
+      </button>
+
+      <div class="lightbox__content" (click)="$event.stopPropagation()">
+        <img class="lightbox__image" [src]="artwork.image" [alt]="artwork.title" />
+        <div class="lightbox__info">
+          <span class="lightbox__category">{{ artwork.category }}</span>
+          <h2>{{ artwork.title }}</h2>
+          <p class="lightbox__artist">{{ artwork.artist }} · {{ artwork.year }}</p>
+          <p class="lightbox__description">{{ artwork.description }}</p>
+        </div>
+      </div>
+
+      <button
+        class="lightbox__nav lightbox__nav--next"
+        type="button"
+        aria-label="Siguiente obra"
+        (click)="next(); $event.stopPropagation()">
+        &#8250;
+      </button>
+
+    </div>
+  }
+</section>

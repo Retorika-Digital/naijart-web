@@ -2,7 +2,7 @@
 
   <!-- HERO -->
   <section class="hero">
-    <div class="hero__text">
+    <div class="hero__content">
       <h1 class="hero__heading">
         Arte nigeriano,<br />
         sin fronteras.
@@ -16,10 +16,10 @@
       </div>
     </div>
 
-    <div class="hero__mark" aria-hidden="true">
+    <div class="hero__mark">
       <img
-        src="/images/logo/logo.png"
-        alt=""
+        src="images/logo/logo.jpeg"
+        alt="Naijart"
         class="hero__logo"
       />
     </div>
@@ -33,12 +33,13 @@
     </div>
 
     <ul class="gallery-preview__track">
-      <li
-        class="gallery-preview__card"
-        *ngFor="let item of galleryPreview"
-        [class]="'gallery-preview__card--' + item.accent"
-      >
-        <div class="gallery-preview__placeholder"></div>
+      <li class="gallery-preview__card" *ngFor="let item of galleryPreview">
+        <img
+          [src]="item.image"
+          [alt]="item.title + ' — ' + item.artist"
+          class="gallery-preview__image"
+          loading="lazy"
+        />
         <p class="gallery-preview__title">{{ item.title }}</p>
         <p class="gallery-preview__artist">{{ item.artist }}</p>
       </li>

@@ -10,31 +10,31 @@ export const routes: Routes = [
 
   // Pendientes de crear el componente (los iremos descomentando):
 
-  // {
-  //   path: 'galeria',
-  //   loadComponent: () => import('./features/gallery/gallery').then(m => m.Gallery),
-  //   title: 'NAIJART — Galería'
-  // },
+  {
+     path: 'galeria',
+     loadComponent: () => import('./features/gallery/gallery').then(m => m.Gallery),
+     title: 'NAIJART — Galería'
+  },
   {
      path: 'calendario',
      loadComponent: () => import('./features/calendar/calendar').then(m => m.Calendar),
      title: 'NAIJART — Calendario'
    },
-  // {
-  //   path: 'unete',
-  //   loadComponent: () => import('./features/join/join').then(m => m.Join),
-  //   title: 'NAIJART — Únete'
-  // },
-  // {
-  //   path: 'contacto',
-  //   loadComponent: () => import('./features/contact/contact').then(m => m.Contact),
-  //   title: 'NAIJART — Contáctanos'
-  // },
-  // {
-  //   path: 'equipo',
-  //   loadComponent: () => import('./features/team/team').then(m => m.Team),
-  //   title: 'NAIJART — Equipo'
-  // },
+  {
+     path: 'unete',
+     loadComponent: () => import('./features/join/join').then(m => m.Join),
+     title: 'NAIJART — Únete'
+   },
+   {
+     path: 'contacto',
+     loadComponent: () => import('./features/contact/contact').then(m => m.Contact),
+     title: 'NAIJART — Contáctanos'
+   },
+   {
+     path: 'quienes-somos',
+     loadComponent: () => import('./features/team/team').then(m => m.Team),
+     title: 'NAIJART — Quienes somos'
+   },
   // {
   //   path: 'blog',
   //   loadComponent: () => import('./features/blog/blog').then(m => m.Blog),

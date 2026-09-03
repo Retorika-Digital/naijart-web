@@ -26,10 +26,14 @@
 
 .hero__heading {
   font-family: var(--font-heading);
-  font-size: var(--fs-h1);
+  font-size: var(--fs-h2);
   line-height: var(--lh-heading);
   color: var(--color-white);
   margin: 0 0 var(--space-6);
+
+  @include respond(tablet) {
+    font-size: var(--fs-h1);
+  }
 
   @include respond(desktop) {
     font-size: 3.75rem;
@@ -41,7 +45,7 @@
   font-size: var(--fs-h5);
   line-height: var(--lh-body);
   color: var(--color-gray-300);
-  max-width: 42ch;
+  max-width: 52ch;
   margin: 0 0 var(--space-8);
 }
 
@@ -55,25 +59,28 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
-
-  // mancha dorada difusa detrás del logo — anticipa el efecto
-  // "mancha de tinta dorada" que se animará en una pasada posterior
-  &::before {
-    content: '';
-    position: absolute;
-    width: 70%;
-    aspect-ratio: 1;
-    background: radial-gradient(circle, var(--color-gold-500) 0%, transparent 70%);
-    opacity: 0.25;
-    filter: blur(40px);
-  }
 }
 
 .hero__logo {
-  position: relative;
-  width: min(320px, 70%);
-  height: auto;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  border: 3px solid var(--color-gold-500);
+  object-fit: cover;
+  // leve resplandor dorado, anticipa el efecto de "mancha de tinta"
+  // que se animará en una pasada posterior
+  box-shadow: 0 0 32px rgba(212, 175, 55, 0.35);
+
+  @include respond(tablet) {
+    width: 280px;
+    height: 280px;
+  }
+
+  @include respond(desktop) {
+    width: 340px;
+    height: 340px;
+    border-width: 4px;
+  }
 }
 
 // ===== GALERÍA PREVIEW =====
@@ -135,24 +142,14 @@
   @include hover-zoom(1.04);
 }
 
-.gallery-preview__placeholder {
+.gallery-preview__image {
+  display: block;
   width: 100%;
   aspect-ratio: 4 / 5;
   border-radius: var(--radius-sm);
   margin-bottom: var(--space-2);
-  background: linear-gradient(135deg, var(--color-gray-700), var(--color-black));
-}
-
-.gallery-preview__card--green .gallery-preview__placeholder {
-  background: linear-gradient(135deg, var(--color-green-700), var(--color-black));
-}
-
-.gallery-preview__card--gold .gallery-preview__placeholder {
-  background: linear-gradient(135deg, var(--color-gold-700), var(--color-black));
-}
-
-.gallery-preview__card--blue .gallery-preview__placeholder {
-  background: linear-gradient(135deg, var(--color-blue-700), var(--color-black));
+  object-fit: cover;
+  background-color: var(--color-gray-700); // color de carga mientras llega la imagen
 }
 
 .gallery-preview__title {

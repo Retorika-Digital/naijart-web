@@ -1,13 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-
-interface GalleryPreviewItem {
-  title: string;
-  artist: string;
-  // Clase de acento usada mientras no hay imagen real (ver home.scss)
-  accent: 'green' | 'gold' | 'blue';
-}
+import { GALLERY_ITEMS } from '../../shared/data/gallery-items';
 
 interface UpcomingEvent {
   day: string;
@@ -24,14 +18,9 @@ interface UpcomingEvent {
   styleUrl: './home.scss'
 })
 export class Home {
-  // TODO: sustituir por imágenes reales cuando estén disponibles
-  galleryPreview: GalleryPreviewItem[] = [
-    { title: 'Reina del Delta', artist: 'Amara Okafor', accent: 'gold' },
-    { title: 'Raíces', artist: 'Chidi Eze', accent: 'green' },
-    { title: 'Puentes', artist: 'Ngozi Adeyemi', accent: 'blue' },
-    { title: 'Corona de Lagos', artist: 'Tunde Bello', accent: 'gold' },
-    { title: 'Memoria de Ibadan', artist: 'Folake Adeyemi', accent: 'green' }
-  ];
+  // Preview de galería: toma los primeros N del mismo listado que usará
+  // el componente de Galería, para que ambos queden sincronizados.
+  galleryPreview = GALLERY_ITEMS.slice(0, 5);
 
   // TODO: sustituir por datos reales / servicio de calendario
   upcomingEvents: UpcomingEvent[] = [

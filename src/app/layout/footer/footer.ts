@@ -33,7 +33,7 @@ export class Footer {
   protected readonly navLinks: FooterLink[] = [
     { label: 'Galería', path: '/galeria' },
     { label: 'Calendario', path: '/calendario' },
-    { label: 'Equipo', path: '/equipo' },
+    { label: 'Quienes somos', path: '/quienes-somos' },
     { label: 'Únete', path: '/unete' },
     { label: 'Contáctanos', path: '/contacto' },
   ];

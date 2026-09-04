@@ -16,6 +16,8 @@
 
 // ===== HERO =====
 .hero {
+  position: relative; // ancla del mapa de fondo
+  overflow: hidden;   // recorta el mapa cuando sangra por los lados
   background-color: var(--color-black);
   padding-block: var(--space-12) var(--space-16);
   @include container;
@@ -23,6 +25,13 @@
   display: grid;
   gap: var(--space-8);
   align-items: center;
+
+  // El contenido va por encima del mapa. Se excluye el propio mapa: si no,
+  // esta regla le pisa el position:absolute y cae en el flujo de la rejilla.
+  > *:not(.hero__map) {
+    position: relative;
+    z-index: 1;
+  }
 
   @include respond(desktop) {
     grid-template-columns: 1.1fr 0.9fr;
@@ -34,6 +43,51 @@
     .hero__mark    { grid-column: 2; grid-row: 1 / span 2; }
     .hero__actions { grid-column: 1; grid-row: 2; }
   }
+}
+
+// Silueta de África de fondo. Muy tenue y con los bordes difuminados por
+// una máscara radial, para que se funda con el negro en vez de recortarse
+// contra él. Decorativa: no debe robar protagonismo al titular.
+.hero__map {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  // Medido por ancho, no por alto: así se ve el continente entero y se
+  // reconoce. Con la altura del hero se ampliaba tanto que solo aparecían
+  // trozos de costa sueltos.
+  // En móvil se baja hasta la altura de la moneda: centrado en el hero
+  // cruzaba el titular y restaba legibilidad.
+  top: 64%;
+  left: 50%;
+  translate: -50% -50%;
+  width: min(78%, 380px);
+  height: auto;
+  max-width: none;
+  stroke: var(--color-gold-500);
+  stroke-width: 2.2;
+  stroke-linejoin: round;
+  opacity: 0.15;
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 55%, transparent 88%);
+  mask-image: radial-gradient(ellipse at center, #000 55%, transparent 88%);
+
+  // En escritorio se coloca sobre la columna de la moneda, para dejar
+  // limpia la zona del titular.
+  @include respond(desktop) {
+    top: 50%;
+    left: auto;
+    right: 4%;
+    translate: 0 -50%;
+    width: min(42%, 560px);
+    opacity: 0.15;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    animation: hero-map-in 1.6s ease-out both;
+  }
+}
+
+@keyframes hero-map-in {
+  from { opacity: 0; }
 }
 
 .hero__heading {

@@ -14,4 +14,4 @@
  *
  * >>> SUBE ESTE NÚMERO CADA VEZ QUE CAMBIES UN FICHERO DE public/i18n/ <<<
  */
-export const I18N_VERSION = '3';
+export const I18N_VERSION = '4';

@@ -55,11 +55,14 @@
 
 // ===== TARJETA =====
 .team-card {
-  @include flex-center(column);
+  display: flex;
+  flex-direction: column;
   background: var(--color-gray-900);
   border: 1px solid var(--color-gray-700);
   border-radius: var(--radius-lg);
-  padding: var(--space-8) var(--space-6);
+  // Sin padding arriba: la foto llega hasta el borde del recuadro.
+  padding: 0 0 var(--space-6);
+  overflow: hidden;
   cursor: pointer;
   text-align: center;
   font-family: inherit;
@@ -71,8 +74,8 @@
     border-color: var(--color-gold-500);
     box-shadow: var(--shadow-md);
 
-    .team-card__avatar {
-      transform: scale(1.06);
+    .team-card__photo {
+      transform: scale(1.04);
     }
 
     .team-card__cta {
@@ -83,49 +86,67 @@
 
   @include focus-ring;
 
+  // La foto ocupa todo el ancho de la tarjeta y recorta en cuadrado,
+  // así se aprecia igual de grande en móvil (1 columna) que en pc (3).
   &__avatar {
     @include flex-center;
-    width: 88px;
-    height: 88px;
-    border-radius: var(--radius-pill);
-    margin-bottom: var(--space-4);
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    margin-bottom: var(--space-5);
     overflow: hidden;
-    transition: transform var(--transition-base);
 
+    // Los miembros sin foto ocupan el mismo hueco para que la rejilla no
+    // se descuadre, pero como círculo: un cuadrado de color macizo del
+    // tamaño de una foto pesa demasiado al lado de las reales.
     span {
-      font-family: var(--font-heading);
-      font-size: var(--fs-h4);
-      font-weight: var(--fw-bold);
-      color: var(--color-black);
-    }
-
-    &__photo {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+      @include flex-center;
+      width: 58%;
+      aspect-ratio: 1 / 1;
       border-radius: var(--radius-pill);
+      font-family: var(--font-heading);
+      font-size: clamp(2.5rem, 8vw, 4rem);
+      font-weight: var(--fw-bold);
+      letter-spacing: 0.04em;
+      color: var(--color-black);
+      transition: transform var(--transition-base);
     }
   }
 
-  &--gold .team-card__avatar {
+  &:hover .team-card__avatar span,
+  &:focus-visible .team-card__avatar span {
+    transform: scale(1.04);
+  }
+
+  &__photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 25%; // encuadra la cara, no el pecho
+    transition: transform var(--transition-base);
+  }
+
+  // El degradado va en el círculo, no en todo el recuadro.
+  &--gold .team-card__avatar span {
     background: linear-gradient(135deg, var(--color-gold-300), var(--color-gold-700));
   }
 
-  &--green .team-card__avatar {
+  &--green .team-card__avatar span {
     background: linear-gradient(135deg, var(--color-green-500), var(--color-green-900));
-    span { color: var(--color-white); }
+    color: var(--color-white);
   }
 
-  &--blue .team-card__avatar {
+  &--blue .team-card__avatar span {
     background: linear-gradient(135deg, var(--color-blue-300), var(--color-blue-700));
-    span { color: var(--color-white); }
+    color: var(--color-white);
   }
 
+  // La foto va a sangre, así que el texto lleva su propio margen lateral.
   &__name {
     font-family: var(--font-heading);
     font-size: var(--fs-h5);
     color: var(--color-white);
     margin-bottom: var(--space-1);
+    padding-inline: var(--space-6);
   }
 
   &__role {
@@ -133,6 +154,7 @@
     font-size: var(--fs-small);
     color: var(--color-gray-300);
     margin-bottom: var(--space-4);
+    padding-inline: var(--space-6);
   }
 
   &__cta {
@@ -140,6 +162,7 @@
     font-size: var(--fs-small);
     font-weight: var(--fw-semibold);
     color: var(--color-gold-500);
+    padding-inline: var(--space-6);
     opacity: 0;
     transform: translateY(4px);
     transition: opacity var(--transition-base), transform var(--transition-base);
@@ -188,30 +211,33 @@
 
   &__avatar {
     @include flex-center;
-    width: 96px;
-    height: 96px;
+    width: 180px;
+    height: 180px;
     border-radius: var(--radius-pill);
     margin-inline: auto;
-    margin-bottom: var(--space-4);
+    margin-bottom: var(--space-5);
     overflow: hidden;
 
     span {
       font-family: var(--font-heading);
-      font-size: var(--fs-h3);
+      font-size: var(--fs-h1);
       font-weight: var(--fw-bold);
       color: var(--color-black);
-    }
-
-    &__photo {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: var(--radius-pill);
     }
 
     &--gold { background: linear-gradient(135deg, var(--color-gold-300), var(--color-gold-700)); }
     &--green { background: linear-gradient(135deg, var(--color-green-500), var(--color-green-900)); span { color: var(--color-white); } }
     &--blue { background: linear-gradient(135deg, var(--color-blue-300), var(--color-blue-700)); span { color: var(--color-white); } }
+  }
+
+  // Fuera de &__avatar: la clase del HTML es .team-modal__photo,
+  // anidada generaba .team-modal__avatar__photo y no aplicaba nunca.
+  &__photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 25%;
+    border-radius: var(--radius-pill);
   }
 
   &__name {

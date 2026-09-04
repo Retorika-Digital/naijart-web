@@ -77,7 +77,10 @@
     left: auto;
     right: 4%;
     translate: 0 -50%;
-    width: min(42%, 560px);
+    // Medido por alto y no por ancho: así el mapa siempre cabe dentro del
+    // hero y el overflow:hidden no le corta la parte de abajo en seco.
+    height: min(92%, 620px);
+    width: auto;
     opacity: 0.15;
   }
 

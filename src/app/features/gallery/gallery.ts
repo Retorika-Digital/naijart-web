@@ -27,7 +27,7 @@ export class Gallery {
       artist: 'Adaeze Nwosu',
       category: 'Pintura',
       year: 2023,
-      image: '/images/gallery/ejemplo1.jpg',
+      image: 'images/gallery/ejemplo1.jpg',
       description: 'Óleo sobre lienzo que reinterpreta la figura de la diosa Osun a través de una paleta cálida de dorados y verdes profundos.'
     },
     {
@@ -36,7 +36,7 @@ export class Gallery {
       artist: 'Chibueze Okafor',
       category: 'Escultura',
       year: 2022,
-      image: '/images/gallery/ejemplo3.jpg',
+      image: 'images/gallery/ejemplo3.jpg',
       description: 'Talla en madera de iroko inspirada en las máscaras ceremoniales igbo, tratada con pátina de bronce.'
     },
     {
@@ -45,7 +45,7 @@ export class Gallery {
       artist: 'Folake Adeyemi',
       category: 'Fotografía',
       year: 2024,
-      image: '/images/gallery/ejemplo2.jpg',
+      image: 'images/gallery/ejemplo2.jpg',
       description: 'Serie documental sobre la vida cotidiana en los mercados de Lagos, capturada en las primeras horas del día.'
     },
     {
@@ -54,7 +54,7 @@ export class Gallery {
       artist: 'Ngozi Eze',
       category: 'Arte Textil',
       year: 2023,
-      image: '/images/gallery/ejemplo5.webp',
+      image: 'images/gallery/ejemplo5.webp',
       description: 'Tapiz elaborado con técnicas tradicionales de tejido yoruba combinadas con hilo metálico dorado.'
     },
     {
@@ -63,7 +63,7 @@ export class Gallery {
       artist: 'Emeka Obi',
       category: 'Arte Digital',
       year: 2024,
-      image: '/images/gallery/ejemplo4.jpg',
+      image: 'images/gallery/ejemplo4.jpg',
       description: 'Composición generativa que fusiona patrones geométricos tradicionales con estética afrofuturista.'
     },
     {
@@ -72,7 +72,7 @@ export class Gallery {
       artist: 'Amara Chukwu',
       category: 'Pintura',
       year: 2021,
-      image: '/images/gallery/ejemplo6.jfif',
+      image: 'images/gallery/ejemplo6.jfif',
       description: 'Acrílico que captura el movimiento de las bailarinas tradicionales durante la temporada del harmattan.'
     },
     {
@@ -81,7 +81,7 @@ export class Gallery {
       artist: 'Chibueze Okafor',
       category: 'Escultura',
       year: 2020,
-      image: '/images/gallery/ejemplo7.jpg',
+      image: 'images/gallery/ejemplo7.jpg',
       description: 'Fundición en bronce que rinde homenaje a los históricos bronces de Benín.',
     },
     {
@@ -90,7 +90,7 @@ export class Gallery {
       artist: 'Folake Adeyemi',
       category: 'Fotografía',
       year: 2023,
-      image: '/images/gallery/ejemplo8.webp',
+      image: 'images/gallery/ejemplo8.webp',
       description: 'Retratos en blanco y negro de artesanos y comerciantes de la capital nigeriana.'
     },
     {
@@ -99,7 +99,7 @@ export class Gallery {
       artist: 'Ngozi Eze',
       category: 'Arte Textil',
       year: 2022,
-      image: '/images/gallery/ejemplo9.jfif',
+      image: 'images/gallery/ejemplo9.jfif',
       description: 'Tela teñida con la técnica tradicional adire, reinterpretada con motivos contemporáneos.'
     },
     {
@@ -108,7 +108,7 @@ export class Gallery {
       artist: 'Emeka Obi',
       category: 'Arte Digital',
       year: 2023,
-      image: '/images/gallery/ejemplo10.avif',
+      image: 'images/gallery/ejemplo10.avif',
       description: 'Collage digital que explora la identidad de la diáspora nigeriana en Europa.'
     },
     {
@@ -117,7 +117,7 @@ export class Gallery {
       artist: 'Amara Chukwu',
       category: 'Pintura',
       year: 2024,
-      image: '/images/gallery/ejemplo11.jpg',
+      image: 'images/gallery/ejemplo11.jpg',
       description: 'Óleo de gran formato que representa el río Níger bañado en tonos dorados al atardecer.'
     },
     {
@@ -126,7 +126,7 @@ export class Gallery {
       artist: 'Folake Adeyemi',
       category: 'Fotografía',
       year: 2022,
-      image: '/images/gallery/ejemplo12.jpg',
+      image: 'images/gallery/ejemplo12.jpg',
       description: 'Retrato colectivo de la comunidad artística de Ibadan.'
     }
   ];

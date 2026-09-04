@@ -1,5 +1,5 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
-import { provideRouter, TitleStrategy } from '@angular/router';
+import { provideRouter, TitleStrategy, withInMemoryScrolling } from '@angular/router';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideTranslateService } from '@ngx-translate/core';
@@ -12,7 +12,14 @@ import { I18N_VERSION } from './core/i18n-version';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideRouter(routes),
+    // Sin esto, al navegar se conserva la posición de scroll: pulsando un
+    // enlace del pie desde el Home aterrizabas a 3000px de la página nueva y
+    // parecía que el enlace no funcionaba. 'enabled' sube arriba al navegar
+    // y devuelve la posición anterior al usar el botón Atrás.
+    provideRouter(
+      routes,
+      withInMemoryScrolling({ scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled' })
+    ),
     { provide: TitleStrategy, useClass: TranslatedTitleStrategy },
     provideClientHydration(withEventReplay()),
     provideHttpClient(withFetch()),

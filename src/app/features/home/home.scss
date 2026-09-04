@@ -27,6 +27,12 @@
   @include respond(desktop) {
     grid-template-columns: 1.1fr 0.9fr;
     padding-block: var(--space-16);
+
+    // En escritorio los botones vuelven bajo el texto, a la izquierda;
+    // la moneda ocupa la columna derecha entera.
+    .hero__content { grid-column: 1; grid-row: 1; }
+    .hero__mark    { grid-column: 2; grid-row: 1 / span 2; }
+    .hero__actions { grid-column: 1; grid-row: 2; }
   }
 }
 
@@ -55,16 +61,34 @@
 }
 
 .hero__badge {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
   font-family: var(--font-body);
   font-size: var(--fs-small);
   color: var(--color-gray-500);
-  margin: 0 0 var(--space-8);
+  margin: 0;
 }
 
+.hero__badge-icon {
+  flex-shrink: 0;
+  width: 1em;
+  height: 1em;
+  color: var(--color-green-500);
+}
+
+// En móvil van debajo de la moneda y lo más compactos posible.
 .hero__actions {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-4);
+  justify-content: center;
+  gap: var(--space-3);
+  margin-top: calc(var(--space-4) * -1); // recupera parte del hueco de la moneda
+
+  @include respond(desktop) {
+    justify-content: flex-start;
+    margin-top: 0;
+  }
 }
 
 // ===== MONEDA 3D (logo girando con grosor) =====

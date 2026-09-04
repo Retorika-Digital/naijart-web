@@ -8,13 +8,12 @@
       <p class="hero__tagline" [innerHTML]="'home.hero.tagline' | translate"></p>
 
       <p class="hero__badge">
+        <svg class="hero__badge-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.4" />
+          <path d="M5 8.2 7 10.2 11 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
         {{ 'home.hero.badge' | translate }}
       </p>
-
-      <div class="hero__actions">
-        <a routerLink="/galeria" class="btn btn-primary">{{ 'home.hero.viewGallery' | translate }}</a>
-        <a routerLink="/unete" class="btn btn-ghost">{{ 'home.hero.joinCommunity' | translate }}</a>
-      </div>
     </div>
 
     <div class="hero__mark">
@@ -55,6 +54,13 @@
         <span class="particle" style="--angle: 324deg; --dist: 10.7em; --delay: 0.85s; --size: 4px;"></span>
         <span class="particle" style="--angle: 342deg; --dist: 12.7em; --delay: 1.25s; --size: 2px; --particle-color: var(--color-gold-500);"></span>
       </div>
+    </div>
+
+    <!-- Fuera de hero__content a propósito: así en móvil caen debajo de la
+         moneda, y en escritorio la rejilla los recoloca bajo el texto. -->
+    <div class="hero__actions">
+      <a routerLink="/galeria" class="btn btn--primary btn--sm">{{ 'home.hero.viewGallery' | translate }}</a>
+      <a routerLink="/unete" class="btn btn--secondary btn--sm">{{ 'home.hero.joinCommunity' | translate }}</a>
     </div>
   </section>
 

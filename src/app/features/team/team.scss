@@ -92,7 +92,7 @@
     @include flex-center;
     width: 100%;
     aspect-ratio: 1 / 1;
-    margin-bottom: var(--space-5);
+    margin-bottom: var(--space-6);
     overflow: hidden;
 
     // Los miembros sin foto ocupan el mismo hueco para que la rejilla no
@@ -215,7 +215,7 @@
     height: 180px;
     border-radius: var(--radius-pill);
     margin-inline: auto;
-    margin-bottom: var(--space-5);
+    margin-bottom: var(--space-6);
     overflow: hidden;
 
     span {

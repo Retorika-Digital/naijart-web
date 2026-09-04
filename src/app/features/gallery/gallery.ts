@@ -1,148 +1,157 @@
-import { Component, HostListener, computed, signal } from '@angular/core';
+import { Component, HostListener, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 interface Artwork {
   id: number;
-  title: string;
-  artist: string;
-  category: string;
+  titleKey: string;        // clave de traducción, ej. 'gallery.items.i1.title'
+  artist: string;          // nombre propio — no se traduce
+  categoryKey: string;     // clave de traducción, ej. 'gallery.categories.painting'
   year: number;
   image: string;
-  description: string;
+  descriptionKey: string;
 }
+
+// Sentinela del filtro "todas": no es una categoría real, así que no
+// se compara contra ninguna clave de obra.
+const ALL = 'all';
 
 @Component({
   selector: 'app-gallery',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslatePipe],
   templateUrl: './gallery.html',
   styleUrl: './gallery.scss'
 })
 export class Gallery {
+  private readonly translate = inject(TranslateService);
+
   // Datos hardcoded para Fase 1 — en Fase 2 vendrán del backend
   protected readonly artworks: Artwork[] = [
     {
       id: 1,
-      title: 'Espíritu de Osun',
+      titleKey: 'gallery.items.i1.title',
       artist: 'Adaeze Nwosu',
-      category: 'Pintura',
+      categoryKey: 'gallery.categories.painting',
       year: 2023,
       image: 'images/gallery/ejemplo1.jpg',
-      description: 'Óleo sobre lienzo que reinterpreta la figura de la diosa Osun a través de una paleta cálida de dorados y verdes profundos.'
+      descriptionKey: 'gallery.items.i1.description'
     },
     {
       id: 2,
-      title: 'Máscara del Silencio',
+      titleKey: 'gallery.items.i2.title',
       artist: 'Chibueze Okafor',
-      category: 'Escultura',
+      categoryKey: 'gallery.categories.sculpture',
       year: 2022,
       image: 'images/gallery/ejemplo3.jpg',
-      description: 'Talla en madera de iroko inspirada en las máscaras ceremoniales igbo, tratada con pátina de bronce.'
+      descriptionKey: 'gallery.items.i2.description'
     },
     {
       id: 3,
-      title: 'Mercado de Lagos al Amanecer',
+      titleKey: 'gallery.items.i3.title',
       artist: 'Folake Adeyemi',
-      category: 'Fotografía',
+      categoryKey: 'gallery.categories.photography',
       year: 2024,
       image: 'images/gallery/ejemplo2.jpg',
-      description: 'Serie documental sobre la vida cotidiana en los mercados de Lagos, capturada en las primeras horas del día.'
+      descriptionKey: 'gallery.items.i3.description'
     },
     {
       id: 4,
-      title: 'Raíces Tejidas',
+      titleKey: 'gallery.items.i4.title',
       artist: 'Ngozi Eze',
-      category: 'Arte Textil',
+      categoryKey: 'gallery.categories.textile',
       year: 2023,
       image: 'images/gallery/ejemplo5.webp',
-      description: 'Tapiz elaborado con técnicas tradicionales de tejido yoruba combinadas con hilo metálico dorado.'
+      descriptionKey: 'gallery.items.i4.description'
     },
     {
       id: 5,
-      title: 'Corona Digital',
+      titleKey: 'gallery.items.i5.title',
       artist: 'Emeka Obi',
-      category: 'Arte Digital',
+      categoryKey: 'gallery.categories.digital',
       year: 2024,
       image: 'images/gallery/ejemplo4.jpg',
-      description: 'Composición generativa que fusiona patrones geométricos tradicionales con estética afrofuturista.'
+      descriptionKey: 'gallery.items.i5.description'
     },
     {
       id: 6,
-      title: 'Danza del Harmattan',
+      titleKey: 'gallery.items.i6.title',
       artist: 'Amara Chukwu',
-      category: 'Pintura',
+      categoryKey: 'gallery.categories.painting',
       year: 2021,
       image: 'images/gallery/ejemplo6.jfif',
-      description: 'Acrílico que captura el movimiento de las bailarinas tradicionales durante la temporada del harmattan.'
+      descriptionKey: 'gallery.items.i6.description'
     },
     {
       id: 7,
-      title: 'Guardián de Bronce',
+      titleKey: 'gallery.items.i7.title',
       artist: 'Chibueze Okafor',
-      category: 'Escultura',
+      categoryKey: 'gallery.categories.sculpture',
       year: 2020,
       image: 'images/gallery/ejemplo7.jpg',
-      description: 'Fundición en bronce que rinde homenaje a los históricos bronces de Benín.',
+      descriptionKey: 'gallery.items.i7.description'
     },
     {
       id: 8,
-      title: 'Retratos de Abuja',
+      titleKey: 'gallery.items.i8.title',
       artist: 'Folake Adeyemi',
-      category: 'Fotografía',
+      categoryKey: 'gallery.categories.photography',
       year: 2023,
       image: 'images/gallery/ejemplo8.webp',
-      description: 'Retratos en blanco y negro de artesanos y comerciantes de la capital nigeriana.'
+      descriptionKey: 'gallery.items.i8.description'
     },
     {
       id: 9,
-      title: 'Manto de Adire',
+      titleKey: 'gallery.items.i9.title',
       artist: 'Ngozi Eze',
-      category: 'Arte Textil',
+      categoryKey: 'gallery.categories.textile',
       year: 2022,
       image: 'images/gallery/ejemplo9.jfif',
-      description: 'Tela teñida con la técnica tradicional adire, reinterpretada con motivos contemporáneos.'
+      descriptionKey: 'gallery.items.i9.description'
     },
     {
       id: 10,
-      title: 'Fragmentos de Identidad',
+      titleKey: 'gallery.items.i10.title',
       artist: 'Emeka Obi',
-      category: 'Arte Digital',
+      categoryKey: 'gallery.categories.digital',
       year: 2023,
       image: 'images/gallery/ejemplo10.avif',
-      description: 'Collage digital que explora la identidad de la diáspora nigeriana en Europa.'
+      descriptionKey: 'gallery.items.i10.description'
     },
     {
       id: 11,
-      title: 'Río Níger al Ocaso',
+      titleKey: 'gallery.items.i11.title',
       artist: 'Amara Chukwu',
-      category: 'Pintura',
+      categoryKey: 'gallery.categories.painting',
       year: 2024,
       image: 'images/gallery/ejemplo11.jpg',
-      description: 'Óleo de gran formato que representa el río Níger bañado en tonos dorados al atardecer.'
+      descriptionKey: 'gallery.items.i11.description'
     },
     {
       id: 12,
-      title: 'Voces de Ibadan',
+      titleKey: 'gallery.items.i12.title',
       artist: 'Folake Adeyemi',
-      category: 'Fotografía',
+      categoryKey: 'gallery.categories.photography',
       year: 2022,
       image: 'images/gallery/ejemplo12.jpg',
-      description: 'Retrato colectivo de la comunidad artística de Ibadan.'
+      descriptionKey: 'gallery.items.i12.description'
     }
   ];
 
+  // Las píldoras de filtro guardan la clave; el texto lo pone el pipe
+  // en la plantilla, así el filtro activo sobrevive al cambio de idioma.
   protected readonly categories = computed(() => {
-    const unique = Array.from(new Set(this.artworks.map(a => a.category)));
-    return ['Todas', ...unique];
+    const unique = Array.from(new Set(this.artworks.map(a => a.categoryKey)));
+    return [ALL, ...unique];
   });
 
-  protected readonly selectedCategory = signal<string>('Todas');
+  protected readonly selectedCategory = signal<string>(ALL);
 
   protected readonly filteredArtworks = computed(() => {
     const cat = this.selectedCategory();
-    return cat === 'Todas'
+    return cat === ALL
       ? this.artworks
-      : this.artworks.filter(a => a.category === cat);
+      : this.artworks.filter(a => a.categoryKey === cat);
   });
 
   protected readonly lightboxOpen = signal(false);
@@ -152,6 +161,11 @@ export class Gallery {
     const list = this.filteredArtworks();
     return list.length ? list[this.currentIndex()] : null;
   });
+
+  // 'all' no existe en el JSON como categoría de obra, tiene su propia clave.
+  protected categoryLabelKey(category: string): string {
+    return category === ALL ? 'gallery.categories.all' : category;
+  }
 
   selectCategory(category: string): void {
     this.selectedCategory.set(category);
@@ -177,6 +191,13 @@ export class Gallery {
     const list = this.filteredArtworks();
     if (!list.length) return;
     this.currentIndex.set((this.currentIndex() - 1 + list.length) % list.length);
+  }
+
+  // El `alt` y el aria-label necesitan el texto ya resuelto, no un binding
+  // de plantilla. `instant()` lee currentLang por dentro, así que la
+  // llamada se recalcula sola al cambiar de idioma.
+  protected artworkTitle(artwork: Artwork): string {
+    return this.translate.instant(artwork.titleKey) as string;
   }
 
   @HostListener('document:keydown', ['$event'])

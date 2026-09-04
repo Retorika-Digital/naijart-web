@@ -2,11 +2,9 @@
 
 <section class="team">
   <div class="team__header">
-    <span class="team__eyebrow">El equipo</span>
-    <h1 class="team__title">Quiénes somos</h1>
-    <p class="team__subtitle">
-      Las personas detrás de Naijart, trabajando para llevar el arte nigeriano a Europa.
-    </p>
+    <span class="team__eyebrow">{{ 'team.eyebrow' | translate }}</span>
+    <h1 class="team__title">{{ 'team.title' | translate }}</h1>
+    <p class="team__subtitle">{{ 'team.subtitle' | translate }}</p>
   </div>
 
   <div class="team__grid">
@@ -26,8 +24,8 @@
           }
         </div>
         <h3 class="team-card__name">{{ member.name }}</h3>
-        <p class="team-card__role">{{ member.role }}</p>
-        <span class="team-card__cta">Ver más</span>
+        <p class="team-card__role">{{ member.roleKey | translate }}</p>
+        <span class="team-card__cta">{{ 'team.viewMore' | translate }}</span>
       </button>
     }
   </div>
@@ -36,7 +34,7 @@
 @if (selectedMember(); as member) {
   <div class="team-modal-overlay" (click)="onOverlayClick($event)">
     <div class="team-modal" role="dialog" aria-modal="true">
-      <button type="button" class="team-modal__close" (click)="closeModal()" aria-label="Cerrar">
+      <button type="button" class="team-modal__close" (click)="closeModal()" [attr.aria-label]="'common.close' | translate">
         &times;
       </button>
 
@@ -49,8 +47,8 @@
       </div>
 
       <h2 class="team-modal__name">{{ member.name }}</h2>
-      <p class="team-modal__role">{{ member.role }}</p>
-      <p class="team-modal__bio">{{ member.bio }}</p>
+      <p class="team-modal__role">{{ member.roleKey | translate }}</p>
+      <p class="team-modal__bio">{{ member.bioKey | translate }}</p>
 
       <div class="team-modal__links">
         <a class="team-modal__link" [href]="'mailto:' + member.email">

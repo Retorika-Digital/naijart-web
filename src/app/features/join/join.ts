@@ -1,5 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
 
 type ProfileType = 'artist' | 'collaborator';
 
@@ -14,20 +15,25 @@ interface JoinFormData {
 
 interface Benefit {
   icon: string;
-  title: string;
-  description: string;
+  titleKey: string;   // clave de traducción, ej. 'join.benefits.b1.title'
+  descriptionKey: string;
 }
 
 interface ProcessStep {
   number: string;
-  title: string;
-  description: string;
+  titleKey: string;
+  descriptionKey: string;
+}
+
+interface InterestArea {
+  value: string;
+  labelKey: string;
 }
 
 interface Testimonial {
-  quote: string;
-  name: string;
-  role: string;
+  quoteKey: string;
+  nameKey: string;
+  roleKey: string;
 }
 
 const EMPTY_FORM: JoinFormData = {
@@ -42,7 +48,7 @@ const EMPTY_FORM: JoinFormData = {
 @Component({
   selector: 'app-join',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, TranslatePipe],
   templateUrl: './join.html',
   styleUrl: './join.scss',
 })
@@ -50,81 +56,31 @@ export class Join {
   // ===== CONTENIDO (placeholder — sustituir por textos reales) =====
 
   protected readonly benefits: Benefit[] = [
-    {
-      icon: 'globe',
-      title: 'Exposición internacional',
-      description:
-        'Tu obra llega a un público europeo a través de nuestras exposiciones, eventos y canales digitales.',
-    },
-    {
-      icon: 'users',
-      title: 'Comunidad',
-      description:
-        'Formas parte de una red de artistas y colaboradores nigerianos unidos por un mismo propósito.',
-    },
-    {
-      icon: 'book',
-      title: 'Recursos y formación',
-      description:
-        'Acceso a talleres, mentorías y recursos pensados para impulsar tu carrera artística o tu labor como colaborador.',
-    },
-    {
-      icon: 'link',
-      title: 'Red de contactos',
-      description:
-        'Conexión directa con galerías, organizadores de eventos y otras asociaciones culturales en Europa.',
-    },
+    { icon: 'globe', titleKey: 'join.benefits.b1.title', descriptionKey: 'join.benefits.b1.description' },
+    { icon: 'users', titleKey: 'join.benefits.b2.title', descriptionKey: 'join.benefits.b2.description' },
+    { icon: 'book', titleKey: 'join.benefits.b3.title', descriptionKey: 'join.benefits.b3.description' },
+    { icon: 'link', titleKey: 'join.benefits.b4.title', descriptionKey: 'join.benefits.b4.description' },
   ];
 
   protected readonly steps: ProcessStep[] = [
-    {
-      number: '01',
-      title: 'Envía tu solicitud',
-      description: 'Completa el formulario con tus datos y cuéntanos un poco sobre ti.',
-    },
-    {
-      number: '02',
-      title: 'Revisamos tu perfil',
-      description: 'Nuestro equipo revisa cada solicitud con calma, sin prisas ni filtros automáticos.',
-    },
-    {
-      number: '03',
-      title: 'Te contactamos',
-      description: 'Te escribimos por email para contarte los siguientes pasos.',
-    },
-    {
-      number: '04',
-      title: 'Formas parte de Naijart',
-      description: 'Te damos la bienvenida a la comunidad y empezamos a construir juntos.',
-    },
+    { number: '01', titleKey: 'join.steps.s1.title', descriptionKey: 'join.steps.s1.description' },
+    { number: '02', titleKey: 'join.steps.s2.title', descriptionKey: 'join.steps.s2.description' },
+    { number: '03', titleKey: 'join.steps.s3.title', descriptionKey: 'join.steps.s3.description' },
+    { number: '04', titleKey: 'join.steps.s4.title', descriptionKey: 'join.steps.s4.description' },
   ];
 
   protected readonly testimonials: Testimonial[] = [
-    {
-      quote:
-        'Unirme a Naijart me abrió puertas que no sabía que existían en Europa. Hoy expongo mi obra fuera de Nigeria por primera vez.',
-      name: 'Nombre Apellido',
-      role: 'Artista visual',
-    },
-    {
-      quote:
-        'Como voluntaria, encontré un espacio donde mi trabajo realmente importa y donde se valora cada aportación.',
-      name: 'Nombre Apellido',
-      role: 'Colaboradora',
-    },
-    {
-      quote: 'La comunidad es lo que más valoro. Nunca me he sentido sola en este camino.',
-      name: 'Nombre Apellido',
-      role: 'Artista textil',
-    },
+    { quoteKey: 'join.testimonials.t1.quote', nameKey: 'join.testimonials.name', roleKey: 'join.testimonials.t1.role' },
+    { quoteKey: 'join.testimonials.t2.quote', nameKey: 'join.testimonials.name', roleKey: 'join.testimonials.t2.role' },
+    { quoteKey: 'join.testimonials.t3.quote', nameKey: 'join.testimonials.name', roleKey: 'join.testimonials.t3.role' },
   ];
 
-  protected readonly interestAreas: string[] = [
-    'Diseño gráfico',
-    'Organización de eventos',
-    'Redes sociales',
-    'Traducción',
-    'Otro',
+  protected readonly interestAreas: InterestArea[] = [
+    { value: 'design', labelKey: 'join.areas.design' },
+    { value: 'events', labelKey: 'join.areas.events' },
+    { value: 'social', labelKey: 'join.areas.social' },
+    { value: 'translation', labelKey: 'join.areas.translation' },
+    { value: 'other', labelKey: 'join.areas.other' },
   ];
 
   // ===== ESTADO DEL FORMULARIO =====

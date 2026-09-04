@@ -1,9 +1,11 @@
-import { Component, HostListener, signal } from '@angular/core';
+import { Component, HostListener, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { Language } from '../../core/services/language';
 
 interface NavLink {
-  label: string;
+  key: string;
   path: string;
 }
 
@@ -12,29 +14,33 @@ type Lang = 'es' | 'en' | 'fr';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive],
+  imports: [CommonModule, RouterLink, RouterLinkActive, TranslatePipe],
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
 export class Header {
+  private readonly translate = inject(TranslateService);
+  private readonly language = inject(Language);
+
   // Estado del menú móvil (hamburguesa)
   protected readonly isMenuOpen = signal(false);
 
   // Añade el borde/sombra dorados al hacer scroll
   protected readonly isScrolled = signal(false);
 
-  // Idioma activo. TODO: sustituir por el estado real de ngx-translate
-  // cuando se implemente i18n (ver "Sistema de estilos globales" en el doc del proyecto).
-  protected readonly currentLang = signal<Lang>('es');
+  // Idioma activo, leído directamente del servicio real de traducción
+  protected readonly currentLang = computed(
+    () => (this.translate.currentLang() ?? 'es') as Lang
+  );
   protected readonly languages: Lang[] = ['es', 'en', 'fr'];
 
   // Ajusta los `path` cuando existan las rutas reales en app.routes.ts
   protected readonly navLinks: NavLink[] = [
-    { label: 'Galería', path: '/galeria' },
-    { label: 'Calendario', path: '/calendario' },
-    { label: 'Quienes somos', path: '/quienes-somos' },
-    { label: 'Únete', path: '/unete' },
-    { label: 'Contáctanos', path: '/contacto' },
+    { key: 'nav.gallery', path: '/galeria' },
+    { key: 'nav.calendar', path: '/calendario' },
+    { key: 'nav.about', path: '/quienes-somos' },
+    { key: 'nav.join', path: '/unete' },
+    { key: 'nav.contact', path: '/contacto' },
   ];
 
   protected toggleMenu(): void {
@@ -46,8 +52,7 @@ export class Header {
   }
 
   protected setLang(lang: Lang): void {
-    this.currentLang.set(lang);
-    // TODO: conectar con el servicio de traducción real (ngx-translate)
+    this.language.setLang(lang);
   }
 
   @HostListener('window:scroll')

@@ -55,6 +55,7 @@ export class Team {
       initials: 'SG',
       accent: 'blue',
       email: 'sergio@naijart.org',
+      photo: 'images/team/SergioGonzalezMontes.jpeg',
       linkedin: 'https://linkedin.com/company/naijart'
     },
     {

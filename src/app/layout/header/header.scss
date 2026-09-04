@@ -1,3 +1,5 @@
+// Ajusta la ruta de @use según la ubicación final del componente
+// (asumiendo src/app/layout/header/header.scss)
 @use '../../../styles/mixins' as *;
 
 .header {
@@ -33,17 +35,28 @@
     @include focus-ring;
   }
 
-  &__logo-img {
-    height: 2.25rem;
-    width: auto;
-  }
-
   &__logo-text {
     font-family: var(--font-heading);
-    font-size: var(--fs-h5);
-    font-weight: var(--fw-semibold);
+    font-size: var(--fs-h3);
+    font-weight: var(--fw-bold);
+    letter-spacing: 0.02em;
+    line-height: 1;
+  }
+
+  &__logo-text-solid {
     color: var(--color-white);
-    letter-spacing: 0.01em;
+  }
+
+  &__logo-text-gradient {
+    background: linear-gradient(
+      90deg,
+      var(--color-gold-500) 0%,
+      var(--color-gold-300) 40%,
+      var(--color-green-500) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 
   // ===== NAV DESKTOP =====

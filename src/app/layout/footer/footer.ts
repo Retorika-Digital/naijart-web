@@ -2,9 +2,10 @@ import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
 
 interface FooterLink {
-  label: string;
+  key: string;
   path: string;
 }
 
@@ -19,7 +20,7 @@ type NewsletterStatus = 'idle' | 'success' | 'error';
 @Component({
   selector: 'app-footer',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule],
+  imports: [CommonModule, RouterLink, FormsModule, TranslatePipe],
   templateUrl: './footer.html',
   styleUrl: './footer.scss',
 })
@@ -31,14 +32,15 @@ export class Footer {
 
   // Ajusta los `path` cuando existan las rutas reales en app.routes.ts
   protected readonly navLinks: FooterLink[] = [
-    { label: 'Galería', path: '/galeria' },
-    { label: 'Calendario', path: '/calendario' },
-    { label: 'Quienes somos', path: '/quienes-somos' },
-    { label: 'Únete', path: '/unete' },
-    { label: 'Contáctanos', path: '/contacto' },
+    { key: 'nav.gallery', path: '/galeria' },
+    { key: 'nav.calendar', path: '/calendario' },
+    { key: 'nav.about', path: '/quienes-somos' },
+    { key: 'nav.join', path: '/unete' },
+    { key: 'nav.contact', path: '/contacto' },
   ];
 
   // Sustituye las URLs por las cuentas reales del cliente
+  // (name se muestra tal cual, son marcas — no se traducen)
   protected readonly socialLinks: SocialLink[] = [
     { name: 'Instagram', url: 'https://instagram.com/naijart', icon: 'instagram' },
     { name: 'Facebook', url: 'https://facebook.com/naijart', icon: 'facebook' },

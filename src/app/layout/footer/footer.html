@@ -2,13 +2,14 @@
   <div class="footer__top">
     <div class="footer__brand">
       <a routerLink="/" class="footer__logo">
-        <img src="images/logo/logo.jpeg" alt="Naijart" class="footer__logo-img" />
-        <span class="footer__logo-text">Naijart</span>
+        <span class="footer__logo-text">
+          <span class="footer__logo-text-gradient">NAI</span><span class="footer__logo-text-solid">JART</span>
+        </span>
       </a>
 
-      <p class="footer__tagline">De Nigeria a Europa. Arte sin fronteras.</p>
+      <p class="footer__tagline">{{ 'footer.tagline' | translate }}</p>
 
-      <div class="footer__social" aria-label="Redes sociales">
+      <div class="footer__social" [attr.aria-label]="'common.socialLinks' | translate">
         @for (social of socialLinks; track social.name) {
           <a
             [href]="social.url"
@@ -48,40 +49,40 @@
       </div>
     </div>
 
-    <nav class="footer__nav" aria-label="Enlaces del sitio">
-      <span class="footer__nav-title">Explorar</span>
+    <nav class="footer__nav" [attr.aria-label]="'common.siteLinks' | translate">
+      <span class="footer__nav-title">{{ 'footer.explore' | translate }}</span>
       @for (link of navLinks; track link.path) {
-        <a [routerLink]="link.path" class="footer__nav-link">{{ link.label }}</a>
+        <a [routerLink]="link.path" class="footer__nav-link">{{ link.key | translate }}</a>
       }
     </nav>
 
     <div class="footer__newsletter">
-      <span class="footer__nav-title">Suscríbete</span>
-      <p class="footer__newsletter-copy">Novedades de artistas, eventos y exposiciones.</p>
+      <span class="footer__nav-title">{{ 'footer.subscribe' | translate }}</span>
+      <p class="footer__newsletter-copy">{{ 'footer.subscribeCopy' | translate }}</p>
 
       <form class="footer__form" (ngSubmit)="onSubscribe()">
         <input
           type="email"
           name="email"
           class="footer__form-input"
-          placeholder="tu@email.com"
+          [placeholder]="'footer.emailPlaceholder' | translate"
           [(ngModel)]="newsletterEmail"
           [attr.aria-invalid]="newsletterStatus() === 'error'"
           required
         />
-        <button type="submit" class="btn btn--primary btn--sm footer__form-submit">Enviar</button>
+        <button type="submit" class="btn btn--primary btn--sm footer__form-submit">{{ 'footer.send' | translate }}</button>
       </form>
 
       @if (newsletterStatus() === 'success') {
-        <p class="footer__form-message footer__form-message--success">¡Gracias por suscribirte!</p>
+        <p class="footer__form-message footer__form-message--success">{{ 'footer.successMsg' | translate }}</p>
       }
       @if (newsletterStatus() === 'error') {
-        <p class="footer__form-message footer__form-message--error">Introduce un email válido.</p>
+        <p class="footer__form-message footer__form-message--error">{{ 'footer.errorMsg' | translate }}</p>
       }
     </div>
   </div>
 
   <div class="footer__bottom">
-    <p class="footer__copyright">© {{ currentYear }} Naijart. Todos los derechos reservados.</p>
+    <p class="footer__copyright">{{ 'footer.copyright' | translate:{ year: currentYear } }}</p>
   </div>
 </footer>

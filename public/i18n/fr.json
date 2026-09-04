@@ -1,0 +1,94 @@
+{
+  "nav": {
+    "gallery": "Galerie",
+    "calendar": "Calendrier",
+    "about": "Qui sommes-nous",
+    "join": "Rejoignez-nous",
+    "contact": "Contact"
+  },
+  "common": {
+    "login": "Connexion",
+    "mainNav": "Navigation principale",
+    "mobileNav": "Navigation mobile",
+    "langSelector": "Sélecteur de langue",
+    "openMenu": "Ouvrir le menu",
+    "socialLinks": "Réseaux sociaux",
+    "siteLinks": "Liens du site",
+    "close": "Fermer"
+  },
+  "months": {
+    "sep": "sept.",
+    "oct": "oct."
+  },
+  "footer": {
+    "tagline": "Du Nigeria à l'Europe. L'art sans frontières.",
+    "explore": "Explorer",
+    "subscribe": "Abonnez-vous",
+    "subscribeCopy": "Actualités des artistes, événements et expositions.",
+    "emailPlaceholder": "votre@email.com",
+    "send": "Envoyer",
+    "successMsg": "Merci pour votre inscription !",
+    "errorMsg": "Veuillez entrer un email valide.",
+    "copyright": "© {{year}} Naijart. Tous droits réservés."
+  },
+  "home": {
+    "hero": {
+      "heading": "Association d'<span class=\"text-gold\">artistes nigérians</span> créée pour promouvoir leur art en <span class=\"text-blue\">Europe</span>.",
+      "tagline": "Du <span class=\"text-green\">Nigeria</span> à l'<span class=\"text-blue\">Europe</span>. <span class=\"text-gold\">L'art sans frontières.</span>",
+      "badge": "Association à but non lucratif · enregistrée au Nigeria",
+      "viewGallery": "Voir la galerie",
+      "joinCommunity": "Rejoindre la communauté"
+    },
+    "services": {
+      "title": "Que faisons-nous ?",
+      "subtitle": "Nous voulons améliorer la société à travers l'art.",
+      "events": {
+        "title": "Événements",
+        "desc": "Expositions, concours et collaborations avec des ambassades et d'autres institutions."
+      },
+      "advice": {
+        "title": "Conseil",
+        "desc": "Accompagnement juridique et commercial des artistes et des collectionneurs."
+      },
+      "humanitarian": {
+        "title": "Projets humanitaires",
+        "desc": "Cours artistiques dans des orphelinats, hôpitaux et prisons."
+      }
+    },
+    "galleryPreview": {
+      "title": "L'art nigérian, sans frontières.",
+      "subtitle": "Naijart apporte les œuvres d'artistes nigérians aux espaces et aux publics d'Europe.",
+      "link": "Voir la galerie complète"
+    },
+    "eventsPreview": {
+      "title": "Prochaines dates",
+      "link": "Voir le calendrier complet"
+    },
+    "joinCta": {
+      "heading": "Rejoignez Naijart",
+      "lead": "Nous sommes des artistes, des organisateurs et des amis de l'art qui travaillent ensemble pour se faire une place en Europe.",
+      "button": "Rejoindre maintenant"
+    },
+    "gallery": {
+      "placeholderTitle": "Œuvre {{n}}",
+      "placeholderArtist": "Artiste à confirmer"
+    },
+    "events": {
+      "event1": {
+        "title": "Exposition collective",
+        "location": "Galería Sur, Madrid",
+        "description": "Exposition collective de peinture et sculpture avec sept artistes nigérians résidant en Espagne."
+      },
+      "event2": {
+        "title": "Rencontre d'artistes",
+        "location": "Centro Cultural, Séville",
+        "description": "Journée de networking entre les artistes de l'association, des galeristes locaux et la presse culturelle."
+      },
+      "event3": {
+        "title": "Atelier de peinture traditionnelle",
+        "location": "Espacio Naijart, Barcelone",
+        "description": "Atelier ouvert sur les techniques traditionnelles nigérianes, animé par des artistes de l'association."
+      }
+    }
+  }
+}

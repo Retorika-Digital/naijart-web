@@ -1,78 +1,181 @@
 <main class="home">
 
-  <!-- HERO -->
+  <!-- HERO — mensaje de misión social, no de galería -->
   <section class="hero">
     <div class="hero__content">
-      <h1 class="hero__heading">
-        Arte nigeriano,<br />
-        sin fronteras.
-      </h1>
-      <p class="hero__lead">
-        Naijart lleva la obra de artistas nigerianos a los espacios y a los públicos de Europa.
+      <h1 class="hero__heading" [innerHTML]="'home.hero.heading' | translate"></h1>
+
+      <p class="hero__tagline" [innerHTML]="'home.hero.tagline' | translate"></p>
+
+      <p class="hero__badge">
+        {{ 'home.hero.badge' | translate }}
       </p>
+
       <div class="hero__actions">
-        <a routerLink="/galeria" class="btn btn-primary">Ver la galería</a>
-        <a routerLink="/unete" class="btn btn-ghost">Únete a la comunidad</a>
+        <a routerLink="/galeria" class="btn btn-primary">{{ 'home.hero.viewGallery' | translate }}</a>
+        <a routerLink="/unete" class="btn btn-ghost">{{ 'home.hero.joinCommunity' | translate }}</a>
       </div>
     </div>
 
     <div class="hero__mark">
-      <img
-        src="images/logo/logo.jpeg"
-        alt="Naijart"
-        class="hero__logo"
-      />
+      <div class="coin" aria-hidden="true">
+        <div class="coin__disc">
+          <div class="coin__edge">
+            @for (segment of coinEdgeSegments; track $index) {
+              <span
+                class="coin__segment"
+                [style.transform]="'rotateZ(' + ($index * (360 / coinEdgeSegments.length)) + 'deg) rotateY(90deg) translateZ(var(--coin-radius))'"
+              ></span>
+            }
+          </div>
+          <img src="images/logo/logo.jpeg" alt="" class="coin__face coin__face--front" />
+          <img src="images/logo/logo.jpeg" alt="" class="coin__face coin__face--back" />
+        </div>
+      </div>
+
+      <div class="hero__particles" aria-hidden="true">
+        <span class="particle" style="--angle: 0deg; --dist: 11em; --delay: 0s; --size: 3px;"></span>
+        <span class="particle" style="--angle: 18deg; --dist: 13em; --delay: 0.3s; --size: 2px; --particle-color: var(--color-gold-500);"></span>
+        <span class="particle" style="--angle: 36deg; --dist: 10.5em; --delay: 0.6s; --size: 4px;"></span>
+        <span class="particle" style="--angle: 54deg; --dist: 12.5em; --delay: 0.9s; --size: 2px; --particle-color: var(--color-gold-500);"></span>
+        <span class="particle" style="--angle: 72deg; --dist: 11.5em; --delay: 1.2s; --size: 3px;"></span>
+        <span class="particle" style="--angle: 90deg; --dist: 13.5em; --delay: 1.5s; --size: 2px; --particle-color: var(--color-gold-500);"></span>
+        <span class="particle" style="--angle: 108deg; --dist: 10.8em; --delay: 1.8s; --size: 4px;"></span>
+        <span class="particle" style="--angle: 126deg; --dist: 12.8em; --delay: 2.1s; --size: 2px; --particle-color: var(--color-gold-500);"></span>
+        <span class="particle" style="--angle: 144deg; --dist: 11.2em; --delay: 0.15s; --size: 3px;"></span>
+        <span class="particle" style="--angle: 162deg; --dist: 13.2em; --delay: 0.45s; --size: 2px; --particle-color: var(--color-gold-500);"></span>
+        <span class="particle" style="--angle: 180deg; --dist: 10.6em; --delay: 0.75s; --size: 4px;"></span>
+        <span class="particle" style="--angle: 198deg; --dist: 12.6em; --delay: 1.05s; --size: 2px; --particle-color: var(--color-gold-500);"></span>
+        <span class="particle" style="--angle: 216deg; --dist: 11.4em; --delay: 1.35s; --size: 3px;"></span>
+        <span class="particle" style="--angle: 234deg; --dist: 13.4em; --delay: 1.65s; --size: 2px; --particle-color: var(--color-gold-500);"></span>
+        <span class="particle" style="--angle: 252deg; --dist: 10.9em; --delay: 1.95s; --size: 4px;"></span>
+        <span class="particle" style="--angle: 270deg; --dist: 12.9em; --delay: 2.25s; --size: 2px; --particle-color: var(--color-gold-500);"></span>
+        <span class="particle" style="--angle: 288deg; --dist: 11.1em; --delay: 0.1s; --size: 3px;"></span>
+        <span class="particle" style="--angle: 306deg; --dist: 13.1em; --delay: 0.5s; --size: 2px; --particle-color: var(--color-gold-500);"></span>
+        <span class="particle" style="--angle: 324deg; --dist: 10.7em; --delay: 0.85s; --size: 4px;"></span>
+        <span class="particle" style="--angle: 342deg; --dist: 12.7em; --delay: 1.25s; --size: 2px; --particle-color: var(--color-gold-500);"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUÉ HACEMOS -->
+  <section class="services">
+    <div class="services__header">
+      <h2>{{ 'home.services.title' | translate }}</h2>
+      <p>{{ 'home.services.subtitle' | translate }}</p>
+    </div>
+
+    <div class="services__grid">
+      <article class="service">
+        <span class="service__icon-ring">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="7" y="10" width="34" height="30" rx="3"></rect>
+            <path d="M15 6 L15 14"></path>
+            <path d="M33 6 L33 14"></path>
+            <path d="M7 19 L41 19"></path>
+            <circle cx="15" cy="26" r="1.6" fill="currentColor" stroke="none"></circle>
+            <circle cx="24" cy="26" r="1.6" fill="currentColor" stroke="none"></circle>
+            <circle cx="33" cy="26" r="1.6" fill="currentColor" stroke="none"></circle>
+            <circle cx="15" cy="33" r="1.6" fill="currentColor" stroke="none"></circle>
+            <circle cx="24" cy="33" r="2.2" fill="var(--color-error)" stroke="none"></circle>
+            <circle cx="33" cy="33" r="1.6" fill="currentColor" stroke="none"></circle>
+          </svg>
+        </span>
+        <h3>{{ 'home.services.events.title' | translate }}</h3>
+        <p>{{ 'home.services.events.desc' | translate }}</p>
+      </article>
+
+      <article class="service">
+        <span class="service__icon-ring">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8 6h10l5 5v21a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z"></path>
+            <path d="M18 6v5h5"></path>
+            <path d="M9 20h10"></path>
+            <path d="M9 25h7"></path>
+            <circle cx="30" cy="27" r="8"></circle>
+            <path d="M36 33 L43 41"></path>
+          </svg>
+        </span>
+        <h3>{{ 'home.services.advice.title' | translate }}</h3>
+        <p>{{ 'home.services.advice.desc' | translate }}</p>
+      </article>
+
+      <article class="service">
+        <span class="service__icon-ring">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M24 40C10 30 6 21 6 15 6 9 11 5 16 5c4 0 7 2 8 6 1-4 4-6 8-6 5 0 10 4 10 10 0 6-4 15-18 25Z"></path>
+            <path d="M17 21 L24 14 L31 21"></path>
+            <path d="M19 21 L19 28 L29 28 L29 21"></path>
+            <path d="M22.5 28 L22.5 24 L25.5 24 L25.5 28"></path>
+          </svg>
+        </span>
+        <h3>{{ 'home.services.humanitarian.title' | translate }}</h3>
+        <p>{{ 'home.services.humanitarian.desc' | translate }}</p>
+      </article>
     </div>
   </section>
 
   <!-- GALERÍA -->
   <section class="gallery-preview">
     <div class="gallery-preview__header">
-      <h2>Desde el pincel al espacio</h2>
-      <a routerLink="/galeria" class="gallery-preview__link">Ver galería completa</a>
+      <div class="gallery-preview__intro">
+        <h2>{{ 'home.galleryPreview.title' | translate }}</h2>
+        <p>{{ 'home.galleryPreview.subtitle' | translate }}</p>
+      </div>
+      <a routerLink="/galeria" class="gallery-preview__link">{{ 'home.galleryPreview.link' | translate }}</a>
     </div>
 
     <ul class="gallery-preview__track">
-      <li class="gallery-preview__card" *ngFor="let item of galleryPreview">
-        <img
-          [src]="item.image"
-          [alt]="item.title + ' — ' + item.artist"
-          class="gallery-preview__image"
-          loading="lazy"
-        />
-        <p class="gallery-preview__title">{{ item.title }}</p>
-        <p class="gallery-preview__artist">{{ item.artist }}</p>
-      </li>
+      @for (item of galleryPreview; track item.slug) {
+        <li class="gallery-preview__card">
+          <img
+            [src]="item.image"
+            [alt]="('home.gallery.placeholderTitle' | translate:{ n: item.number })"
+            class="gallery-preview__image"
+            loading="lazy"
+          />
+          <p class="gallery-preview__title">{{ 'home.gallery.placeholderTitle' | translate:{ n: item.number } }}</p>
+          <p class="gallery-preview__artist">{{ 'home.gallery.placeholderArtist' | translate }}</p>
+        </li>
+      }
     </ul>
   </section>
 
   <!-- CALENDARIO -->
   <section class="events-preview">
-    <h2>Próximas citas</h2>
+    <h2>{{ 'home.eventsPreview.title' | translate }}</h2>
 
     <ul class="events-preview__list">
-      <li class="events-preview__item" *ngFor="let event of upcomingEvents">
-        <div class="events-preview__date">
-          <span class="events-preview__day">{{ event.day }}</span>
-          <span class="events-preview__month">{{ event.month }}</span>
-        </div>
-        <div class="events-preview__info">
-          <p class="events-preview__title">{{ event.title }}</p>
-          <p class="events-preview__location">{{ event.location }}</p>
-        </div>
-      </li>
+      @for (event of upcomingEvents; track event.titleKey) {
+        <li>
+          <button type="button" class="events-preview__item" (click)="openEvent(event)">
+            <span class="events-preview__date">
+              <span class="events-preview__day">{{ event.day }}</span>
+              <span class="events-preview__month">{{ event.monthKey | translate }}</span>
+            </span>
+            <span class="events-preview__info">
+              <span class="events-preview__title">{{ event.titleKey | translate }}</span>
+              <span class="events-preview__location">{{ event.locationKey | translate }}</span>
+            </span>
+          </button>
+        </li>
+      }
     </ul>
 
-    <a routerLink="/calendario" class="events-preview__link">Ver calendario completo</a>
+    <a routerLink="/calendario" class="events-preview__link">{{ 'home.eventsPreview.link' | translate }}</a>
   </section>
 
   <!-- CTA ÚNETE -->
   <section class="join-cta">
-    <h2 class="join-cta__heading">Súmate a Naijart</h2>
+    <h2 class="join-cta__heading">{{ 'home.joinCta.heading' | translate }}</h2>
     <p class="join-cta__lead">
-      Somos artistas, organizadores y amigos del arte trabajando juntos para abrir camino en Europa.
+      {{ 'home.joinCta.lead' | translate }}
     </p>
-    <a routerLink="/unete" class="btn btn-primary btn-lg">Únete ahora</a>
+    <a routerLink="/unete" class="btn btn-primary btn-lg">{{ 'home.joinCta.button' | translate }}</a>
   </section>
+
+  @if (selectedEvent(); as event) {
+    <app-event-modal [event]="event" (closed)="closeEvent()"></app-event-modal>
+  }
 
 </main>

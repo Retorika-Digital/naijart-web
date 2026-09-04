@@ -8,6 +8,12 @@
   flex-direction: column;
 }
 
+// Utilidades de color de texto usadas en el titular del hero.
+// TODO: si se reutilizan en más componentes, moverlas a src/styles/_typography.scss
+.text-gold { color: var(--color-gold-500); }
+.text-blue { color: var(--color-blue-300); }
+.text-green { color: var(--color-green-500); }
+
 // ===== HERO =====
 .hero {
   background-color: var(--color-black);
@@ -29,23 +35,29 @@
   font-size: var(--fs-h2);
   line-height: var(--lh-heading);
   color: var(--color-white);
-  margin: 0 0 var(--space-6);
+  margin: 0 0 var(--space-4);
 
   @include respond(tablet) {
     font-size: var(--fs-h1);
   }
 
   @include respond(desktop) {
-    font-size: 3.75rem;
+    font-size: 3rem;
   }
 }
 
-.hero__lead {
+.hero__tagline {
   font-family: var(--font-body);
+  font-weight: var(--fw-semibold);
   font-size: var(--fs-h5);
-  line-height: var(--lh-body);
   color: var(--color-gray-300);
-  max-width: 52ch;
+  margin: 0 0 var(--space-4);
+}
+
+.hero__badge {
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  color: var(--color-gray-500);
   margin: 0 0 var(--space-8);
 }
 
@@ -55,31 +67,239 @@
   gap: var(--space-4);
 }
 
+// ===== MONEDA 3D (logo girando con grosor) =====
 .hero__mark {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+
+  // sombra de apoyo bajo la moneda, le da sensación de peso/volumen
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -8%;
+    width: 55%;
+    height: 24px;
+    background: radial-gradient(ellipse, rgba(0, 0, 0, 0.5), transparent 70%);
+  }
 }
 
-.hero__logo {
+.coin {
+  perspective: 1000px;
   width: 220px;
   height: 220px;
-  border-radius: 50%;
-  border: 3px solid var(--color-gold-500);
-  object-fit: cover;
-  // leve resplandor dorado, anticipa el efecto de "mancha de tinta"
-  // que se animará en una pasada posterior
-  box-shadow: 0 0 32px rgba(212, 175, 55, 0.35);
+  --coin-radius: 110px;
+  --coin-thickness: 14px;
+  // El brillo va aquí, NO en .coin__disc: un filter sobre el elemento
+  // que tiene transform-style:preserve-3d "aplana" el 3D y rompe el giro.
+  filter: drop-shadow(0 0 28px rgba(212, 175, 55, 0.35));
 
   @include respond(tablet) {
     width: 280px;
     height: 280px;
+    --coin-radius: 140px;
+    --coin-thickness: 18px;
   }
 
   @include respond(desktop) {
     width: 340px;
     height: 340px;
-    border-width: 4px;
+    --coin-radius: 170px;
+    --coin-thickness: 22px;
+  }
+}
+
+.coin__disc {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  animation: coin-spin 16s linear infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+.coin__face {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--color-gold-500);
+  box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.55);
+  backface-visibility: hidden;
+  transform: translateZ(calc(var(--coin-thickness) / 2));
+
+  @include respond(desktop) {
+    border-width: 6px;
+  }
+}
+
+.coin__face--back {
+  transform: rotateY(180deg) translateZ(calc(var(--coin-thickness) / 2));
+}
+
+.coin__edge {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+
+// Cada "segmento" es una tira fina que, repetida alrededor del borde
+// de la cara circular, forma el canto grueso de la moneda.
+.coin__segment {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--coin-thickness);
+  height: calc(2 * 3.14159265 * var(--coin-radius) / 24 + 1px);
+  margin-left: calc(-0.5 * var(--coin-thickness));
+  margin-top: calc(-0.5 * (2 * 3.14159265 * var(--coin-radius) / 24 + 1px));
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.45), rgba(0, 0, 0, 0.6)),
+    repeating-linear-gradient(
+      180deg,
+      var(--color-gold-300) 0,
+      var(--color-gold-700) 2px,
+      var(--color-gold-300) 4px
+    );
+  backface-visibility: hidden;
+}
+
+@keyframes coin-spin {
+  from { transform: rotateY(0deg); }
+  to { transform: rotateY(360deg); }
+}
+
+// ===== PARTÍCULAS DORADAS ALREDEDOR DEL LOGO =====
+.hero__particles {
+  position: absolute;
+  inset: 0;
+  font-size: 8px; // unidad base; las distancias de las partículas están en em
+  pointer-events: none;
+
+  @include respond(tablet) {
+    font-size: 10px;
+  }
+
+  @include respond(desktop) {
+    font-size: 12px;
+  }
+}
+
+.particle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--size, 3px);
+  height: var(--size, 3px);
+  margin: calc(var(--size, 3px) / -2);
+  border-radius: 50%;
+  background: var(--particle-color, var(--color-gold-300));
+  opacity: 0;
+  transform: rotate(var(--angle)) translateY(calc(-1 * var(--dist)));
+  animation: particle-drift 5s ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+    opacity: 0.35;
+  }
+}
+
+@keyframes particle-drift {
+  0%,
+  100% {
+    opacity: 0;
+    transform: rotate(var(--angle)) translateY(calc(-1 * var(--dist)));
+  }
+
+  50% {
+    opacity: 0.85;
+    transform: rotate(var(--angle)) translateY(calc(-1 * (var(--dist) + 1.2em)));
+  }
+}
+
+// ===== QUÉ HACEMOS =====
+.services {
+  @include container;
+  padding-block: var(--space-12);
+  text-align: center;
+}
+
+.services__header {
+  max-width: 48ch;
+  margin-inline: auto;
+  margin-bottom: var(--space-12);
+
+  h2 {
+    font-family: var(--font-heading);
+    font-size: var(--fs-h2);
+    color: var(--color-white);
+    margin: 0 0 var(--space-2);
+  }
+
+  p {
+    font-family: var(--font-body);
+    color: var(--color-gold-300);
+    margin: 0;
+  }
+}
+
+.services__grid {
+  display: grid;
+  gap: var(--space-8);
+
+  @include respond(tablet) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.service {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding-inline: var(--space-4);
+
+  @include respond(tablet) {
+    &:not(:first-child) {
+      border-left: 1px solid var(--color-gray-700);
+    }
+  }
+
+  h3 {
+    font-family: var(--font-body);
+    font-weight: var(--fw-semibold);
+    font-size: var(--fs-h5);
+    color: var(--color-white);
+    margin: 0;
+  }
+
+  p {
+    font-family: var(--font-body);
+    font-size: var(--fs-small);
+    color: var(--color-gray-500);
+    margin: 0;
+    max-width: 32ch;
+  }
+}
+
+.service__icon-ring {
+  width: 104px;
+  height: 104px;
+  border-radius: 50%;
+  border: 2px solid var(--color-gold-500);
+  color: var(--color-gold-500);
+  @include flex-center;
+
+  svg {
+    width: 56px;
+    height: 56px;
   }
 }
 
@@ -92,14 +312,28 @@
 .gallery-preview__header {
   @include container;
   display: flex;
-  justify-content: space-between;
-  align-items: baseline;
+  flex-direction: column;
+  gap: var(--space-4);
   margin-bottom: var(--space-6);
+
+  @include respond(tablet) {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
 
   h2 {
     font-family: var(--font-heading);
     font-size: var(--fs-h2);
     color: var(--color-white);
+    margin: 0 0 var(--space-2);
+  }
+
+  p {
+    font-family: var(--font-body);
+    font-size: var(--fs-body);
+    color: var(--color-gray-300);
+    max-width: 52ch;
     margin: 0;
   }
 }
@@ -128,8 +362,6 @@
   list-style: none;
   margin: 0;
 
-  // oculta la barra en navegadores WebKit sin depender de _scrollbar.scss
-  // (ese parcial ya cubre el resto de scrolls del sitio)
   &::-webkit-scrollbar {
     height: 6px;
   }
@@ -188,11 +420,23 @@
 }
 
 .events-preview__item {
+  width: 100%;
   display: flex;
   gap: var(--space-6);
   align-items: center;
   padding-block: var(--space-4);
+  border: none;
   border-bottom: 1px solid var(--color-gray-700);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  @include focus-ring;
+
+  &:hover .events-preview__title {
+    color: var(--color-gold-300);
+  }
 }
 
 .events-preview__date {
@@ -214,18 +458,22 @@
   font-size: var(--fs-small);
 }
 
+.events-preview__info {
+  display: flex;
+  flex-direction: column;
+}
+
 .events-preview__title {
   font-family: var(--font-body);
   font-weight: var(--fw-semibold);
   color: var(--color-white);
-  margin: 0;
+  transition: color var(--transition-base);
 }
 
 .events-preview__location {
   font-family: var(--font-body);
   font-size: var(--fs-small);
   color: var(--color-gray-500);
-  margin: 0;
 }
 
 .events-preview__link {

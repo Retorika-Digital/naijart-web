@@ -1,22 +1,23 @@
 <header class="header" [class.header--scrolled]="isScrolled()">
   <div class="header__inner">
     <a routerLink="/" class="header__logo" (click)="closeMenu()">
-      <img src="images/logo/logo.jpeg" alt="Naijart" class="header__logo-img" />
-      <span class="header__logo-text">Naijart</span>
+      <span class="header__logo-text">
+        <span class="header__logo-text-gradient">NAI</span><span class="header__logo-text-solid">JART</span>
+      </span>
     </a>
 
-    <nav class="header__nav" aria-label="Navegación principal">
+    <nav class="header__nav" [attr.aria-label]="'common.mainNav' | translate">
       @for (link of navLinks; track link.path) {
         <a
           [routerLink]="link.path"
           routerLinkActive="header__link--active"
           class="header__link"
-        >{{ link.label }}</a>
+        >{{ link.key | translate }}</a>
       }
     </nav>
 
     <div class="header__actions">
-      <div class="header__lang" role="group" aria-label="Selector de idioma">
+      <div class="header__lang" role="group" [attr.aria-label]="'common.langSelector' | translate">
         @for (lang of languages; track lang) {
           <button
             type="button"
@@ -27,7 +28,7 @@
         }
       </div>
 
-      <a routerLink="/login" class="btn btn--ghost btn--sm header__login">Log in</a>
+      <a routerLink="/login" class="btn btn--ghost btn--sm header__login">{{ 'common.login' | translate }}</a>
 
       <button
         type="button"
@@ -36,7 +37,7 @@
         (click)="toggleMenu()"
         [attr.aria-expanded]="isMenuOpen()"
         aria-controls="mobile-menu"
-        aria-label="Abrir menú"
+        [attr.aria-label]="'common.openMenu' | translate"
       >
         <span></span>
         <span></span>
@@ -46,19 +47,19 @@
   </div>
 
   <div class="header__mobile" id="mobile-menu" [class.header__mobile--open]="isMenuOpen()">
-    <nav class="header__mobile-nav" aria-label="Navegación móvil">
+    <nav class="header__mobile-nav" [attr.aria-label]="'common.mobileNav' | translate">
       @for (link of navLinks; track link.path) {
         <a
           [routerLink]="link.path"
           routerLinkActive="header__mobile-link--active"
           class="header__mobile-link"
           (click)="closeMenu()"
-        >{{ link.label }}</a>
+        >{{ link.key | translate }}</a>
       }
     </nav>
 
     <div class="header__mobile-footer">
-      <div class="header__lang header__lang--mobile" role="group" aria-label="Selector de idioma">
+      <div class="header__lang header__lang--mobile" role="group" [attr.aria-label]="'common.langSelector' | translate">
         @for (lang of languages; track lang) {
           <button
             type="button"
@@ -69,7 +70,7 @@
         }
       </div>
 
-      <a routerLink="/login" class="btn btn--ghost btn--sm" (click)="closeMenu()">Log in</a>
+      <a routerLink="/login" class="btn btn--ghost btn--sm" (click)="closeMenu()">{{ 'common.login' | translate }}</a>
     </div>
   </div>
 </header>

@@ -58,36 +58,6 @@ export class Team {
       email: 'sergio@naijart.org',
       photo: 'images/team/SergioGonzalezMontes.jpeg',
       linkedin: 'https://linkedin.com/company/naijart'
-    },
-    {
-      id: 4,
-      name: 'Emeka Nwosu',
-      roleKey: 'team.members.m4.role',
-      bioKey: 'team.members.m4.bio',
-      initials: 'EN',
-      accent: 'gold',
-      email: 'emeka@naijart.org',
-      instagram: 'https://instagram.com/naijart'
-    },
-    {
-      id: 5,
-      name: 'Folake Adeyemi',
-      roleKey: 'team.members.m5.role',
-      bioKey: 'team.members.m5.bio',
-      initials: 'FA',
-      accent: 'green',
-      email: 'folake@naijart.org',
-      linkedin: 'https://linkedin.com/company/naijart'
-    },
-    {
-      id: 6,
-      name: 'Tunde Bakare',
-      roleKey: 'team.members.m6.role',
-      bioKey: 'team.members.m6.bio',
-      initials: 'TB',
-      accent: 'blue',
-      email: 'tunde@naijart.org',
-      instagram: 'https://instagram.com/naijart'
     }
   ]);
 

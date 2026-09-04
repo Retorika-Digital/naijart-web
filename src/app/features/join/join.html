@@ -3,20 +3,17 @@
   <!-- ===== HERO ===== -->
   <header class="join__hero">
     <div class="join__hero-inner">
-      <h1 class="join__hero-title">Únete a Naijart</h1>
-      <p class="join__hero-subtitle">
-        Buscamos artistas que quieran mostrar su obra en Europa y personas dispuestas a
-        colaborar con la asociación. Si te sientes identificado, este es tu sitio.
-      </p>
+      <h1 class="join__hero-title">{{ 'join.hero.title' | translate }}</h1>
+      <p class="join__hero-subtitle">{{ 'join.hero.subtitle' | translate }}</p>
     </div>
   </header>
 
   <!-- ===== BENEFICIOS ===== -->
   <section class="join__benefits" aria-labelledby="benefits-title">
-    <h2 id="benefits-title" class="join__section-title">Qué te ofrece unirte</h2>
+    <h2 id="benefits-title" class="join__section-title">{{ 'join.benefits.title' | translate }}</h2>
 
     <div class="join__benefits-grid">
-      @for (benefit of benefits; track benefit.title) {
+      @for (benefit of benefits; track benefit.titleKey) {
         <article class="benefit-card">
           <div class="benefit-card__icon">
             @switch (benefit.icon) {
@@ -49,8 +46,8 @@
               }
             }
           </div>
-          <h3 class="benefit-card__title">{{ benefit.title }}</h3>
-          <p class="benefit-card__description">{{ benefit.description }}</p>
+          <h3 class="benefit-card__title">{{ benefit.titleKey | translate }}</h3>
+          <p class="benefit-card__description">{{ benefit.descriptionKey | translate }}</p>
         </article>
       }
     </div>
@@ -58,15 +55,15 @@
 
   <!-- ===== CÓMO FUNCIONA ===== -->
   <section class="join__steps" aria-labelledby="steps-title">
-    <h2 id="steps-title" class="join__section-title">Cómo funciona</h2>
+    <h2 id="steps-title" class="join__section-title">{{ 'join.steps.title' | translate }}</h2>
 
     <ol class="join__steps-list">
       @for (step of steps; track step.number) {
         <li class="step">
           <span class="step__number">{{ step.number }}</span>
           <div class="step__content">
-            <h3 class="step__title">{{ step.title }}</h3>
-            <p class="step__description">{{ step.description }}</p>
+            <h3 class="step__title">{{ step.titleKey | translate }}</h3>
+            <p class="step__description">{{ step.descriptionKey | translate }}</p>
           </div>
         </li>
       }
@@ -75,15 +72,15 @@
 
   <!-- ===== TESTIMONIOS ===== -->
   <section class="join__testimonials" aria-labelledby="testimonials-title">
-    <h2 id="testimonials-title" class="join__section-title">Voces de la comunidad</h2>
+    <h2 id="testimonials-title" class="join__section-title">{{ 'join.testimonials.title' | translate }}</h2>
 
     <div class="join__testimonials-track">
-      @for (testimonial of testimonials; track testimonial.name + testimonial.role) {
+      @for (testimonial of testimonials; track testimonial.quoteKey) {
         <blockquote class="testimonial-card">
-          <p class="testimonial-card__quote">"{{ testimonial.quote }}"</p>
+          <p class="testimonial-card__quote">"{{ testimonial.quoteKey | translate }}"</p>
           <footer class="testimonial-card__author">
-            <span class="testimonial-card__name">{{ testimonial.name }}</span>
-            <span class="testimonial-card__role">{{ testimonial.role }}</span>
+            <span class="testimonial-card__name">{{ testimonial.nameKey | translate }}</span>
+            <span class="testimonial-card__role">{{ testimonial.roleKey | translate }}</span>
           </footer>
         </blockquote>
       }
@@ -94,10 +91,8 @@
   <section class="join__form-section" aria-labelledby="form-title">
     <div class="join__form-wrapper">
       <div class="join__form-intro">
-        <h2 id="form-title" class="join__section-title">Cuéntanos sobre ti</h2>
-        <p class="join__form-lead">
-          Rellena el formulario y nos pondremos en contacto contigo lo antes posible.
-        </p>
+        <h2 id="form-title" class="join__section-title">{{ 'join.form.title' | translate }}</h2>
+        <p class="join__form-lead">{{ 'join.form.lead' | translate }}</p>
       </div>
 
       @if (formStatus() === 'success') {
@@ -106,19 +101,17 @@
             <circle cx="12" cy="12" r="9" />
             <path d="m8 12.5 2.5 2.5L16 9.5" />
           </svg>
-          <h3 class="join__success-title">¡Gracias, {{ formData().name }}!</h3>
-          <p class="join__success-text">
-            Hemos recibido tu solicitud. Te escribiremos pronto a {{ formData().email }}.
-          </p>
+          <h3 class="join__success-title">{{ 'join.success.title' | translate:{ name: formData().name } }}</h3>
+          <p class="join__success-text">{{ 'join.success.text' | translate:{ email: formData().email } }}</p>
           <button type="button" class="btn btn--secondary" (click)="sendAnother()">
-            Enviar otra solicitud
+            {{ 'join.success.again' | translate }}
           </button>
         </div>
       } @else {
         <form class="join__form" (ngSubmit)="onSubmit()" #joinForm="ngForm">
 
           <!-- Selector de tipo de perfil -->
-          <div class="type-toggle" role="radiogroup" aria-label="Tipo de perfil">
+          <div class="type-toggle" role="radiogroup" [attr.aria-label]="'join.form.typeLabel' | translate">
             <button
               type="button"
               class="type-toggle__option"
@@ -127,7 +120,7 @@
               [attr.aria-checked]="formData().type === 'artist'"
               (click)="setType('artist')"
             >
-              Soy artista
+              {{ 'join.form.artist' | translate }}
             </button>
             <button
               type="button"
@@ -137,12 +130,12 @@
               [attr.aria-checked]="formData().type === 'collaborator'"
               (click)="setType('collaborator')"
             >
-              Quiero colaborar
+              {{ 'join.form.collaborator' | translate }}
             </button>
           </div>
 
           <div class="form-group">
-            <label for="name" class="form-label">Nombre completo</label>
+            <label for="name" class="form-label">{{ 'join.form.name' | translate }}</label>
             <input
               id="name"
               type="text"
@@ -155,7 +148,7 @@
           </div>
 
           <div class="form-group">
-            <label for="email" class="form-label">Email</label>
+            <label for="email" class="form-label">{{ 'join.form.email' | translate }}</label>
             <input
               id="email"
               type="email"
@@ -169,7 +162,7 @@
 
           @if (formData().type === 'artist') {
             <div class="form-group">
-              <label for="portfolioLink" class="form-label">Enlace a tu portfolio o redes</label>
+              <label for="portfolioLink" class="form-label">{{ 'join.form.portfolio' | translate }}</label>
               <input
                 id="portfolioLink"
                 type="url"
@@ -183,7 +176,7 @@
             </div>
           } @else {
             <div class="form-group">
-              <label for="interestArea" class="form-label">Área en la que quieres colaborar</label>
+              <label for="interestArea" class="form-label">{{ 'join.form.interestArea' | translate }}</label>
               <select
                 id="interestArea"
                 name="interestArea"
@@ -192,15 +185,15 @@
                 [ngModel]="formData().interestArea"
                 (ngModelChange)="updateField('interestArea', $event)"
               >
-                <option value="" disabled selected>Selecciona una opción</option>
-                @for (area of interestAreas; track area) {
-                  <option [value]="area">{{ area }}</option>
+                <option value="" disabled selected>{{ 'join.form.selectOption' | translate }}</option>
+                @for (area of interestAreas; track area.value) {
+                  <option [value]="area.value">{{ area.labelKey | translate }}</option>
                 }
               </select>
             </div>
 
             <div class="form-group">
-              <label for="portfolioLink" class="form-label">Enlace a tus redes (opcional)</label>
+              <label for="portfolioLink" class="form-label">{{ 'join.form.socials' | translate }}</label>
               <input
                 id="portfolioLink"
                 type="url"
@@ -214,7 +207,7 @@
           }
 
           <div class="form-group">
-            <label for="message" class="form-label">Cuéntanos algo más sobre ti</label>
+            <label for="message" class="form-label">{{ 'join.form.message' | translate }}</label>
             <textarea
               id="message"
               name="message"
@@ -227,7 +220,7 @@
           </div>
 
           <button type="submit" class="btn btn--primary" [disabled]="joinForm.invalid">
-            Enviar solicitud
+            {{ 'join.form.submit' | translate }}
           </button>
         </form>
       }

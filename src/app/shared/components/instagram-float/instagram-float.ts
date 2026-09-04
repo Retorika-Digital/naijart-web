@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-instagram-float',
   standalone: true,
+  imports: [TranslatePipe],
   templateUrl: './instagram-float.html',
   styleUrl: './instagram-float.scss',
 })

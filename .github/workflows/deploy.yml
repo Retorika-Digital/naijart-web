@@ -1,0 +1,46 @@
+name: Desplegar a GitHub Pages
+
+# Cada cambio que entra en main se publica solo. Antes había que lanzar
+# el build y el deploy a mano, y era fácil olvidarlo: la web se quedaba
+# con la versión anterior aunque main ya tuviera los cambios.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # permite lanzarlo a mano desde la pestaña Actions
+
+permissions:
+  contents: write # necesario para escribir en la rama gh-pages
+
+# Si se empujan dos cambios seguidos, se despliega solo el último.
+concurrency:
+  group: deploy-pages
+  cancel-in-progress: true
+
+jobs:
+  desplegar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # El base-href tiene que coincidir con el nombre del repo, o la web
+      # carga en blanco al servirse desde /naijart-web/.
+      - run: npm run build -- --base-href=/naijart-web/
+
+      # GitHub Pages no conoce las rutas de Angular: sin este fallback,
+      # entrar directo a una URL que no esté prerenderizada da 404.
+      - name: Fallback de rutas
+        run: cp dist/naijart/browser/index.html dist/naijart/browser/404.html
+
+      - name: Publicar en gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist/naijart/browser
+          enable_jekyll: false # crea el .nojekyll que Pages necesita

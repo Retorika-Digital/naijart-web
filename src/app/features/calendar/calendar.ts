@@ -1,13 +1,14 @@
-import { Component, signal, computed } from '@angular/core';
+import { Component, signal, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 interface CalendarEvent {
   id: number;
-  title: string;
+  titleKey: string;        // clave de traducción, ej. 'calendar.events.e1.title'
   date: string; // ISO 'YYYY-MM-DD'
   time: string;
-  location: string;
-  description: string;
+  locationKey: string;
+  descriptionKey: string;
   image: string;
 }
 
@@ -19,20 +20,28 @@ interface CalendarDay {
   events: CalendarEvent[];
 }
 
+// Locale para toLocaleDateString: el código de idioma de la app por sí solo
+// no basta para formatear fechas (necesita región).
+const DATE_LOCALES: Record<string, string> = {
+  es: 'es-ES',
+  en: 'en-GB',
+  fr: 'fr-FR'
+};
+
 @Component({
   selector: 'app-calendar',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslatePipe],
   templateUrl: './calendar.html',
   styleUrl: './calendar.scss'
 })
 export class Calendar {
-  private readonly monthNames = [
-    'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
-    'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
-  ];
+  private readonly translate = inject(TranslateService);
 
-  readonly weekDayLabels = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
+  // Lunes primero, igual que la rejilla
+  readonly weekDayKeys = ['d1', 'd2', 'd3', 'd4', 'd5', 'd6', 'd7'].map(
+    d => `calendar.weekdays.${d}`
+  );
 
   currentDate = signal(new Date(2026, 8, 1)); // arranca en septiembre 2026
   selectedEvent = signal<CalendarEvent | null>(null);
@@ -41,45 +50,46 @@ export class Calendar {
   events: CalendarEvent[] = [
     {
       id: 1,
-      title: 'Exposición: Raíces',
+      titleKey: 'calendar.events.e1.title',
       date: '2026-09-12',
       time: '18:00',
-      location: 'Galería Sur, Sevilla',
-      description: 'Muestra colectiva de pintura y escultura de artistas nigerianos residentes en España.',
+      locationKey: 'calendar.events.e1.location',
+      descriptionKey: 'calendar.events.e1.description',
       image: '/images/gallery/event-raices.jpg'
     },
     {
       id: 2,
-      title: 'Taller de tejido tradicional',
+      titleKey: 'calendar.events.e2.title',
       date: '2026-09-19',
       time: '11:00',
-      location: 'Centro Cultural, Madrid',
-      description: 'Taller práctico de técnicas textiles yoruba, abierto a todos los niveles.',
+      locationKey: 'calendar.events.e2.location',
+      descriptionKey: 'calendar.events.e2.description',
       image: '/images/gallery/event-tejido.jpg'
     },
     {
       id: 3,
-      title: 'Noche de poesía y música',
+      titleKey: 'calendar.events.e3.title',
       date: '2026-09-26',
       time: '20:00',
-      location: 'Casa África, Sevilla',
-      description: 'Velada de spoken word y música afrobeat en directo con artistas invitados.',
+      locationKey: 'calendar.events.e3.location',
+      descriptionKey: 'calendar.events.e3.description',
       image: '/images/gallery/event-poesia.jpg'
     },
     {
       id: 4,
-      title: 'Charla: Arte contemporáneo nigeriano',
+      titleKey: 'calendar.events.e4.title',
       date: '2026-10-03',
       time: '19:00',
-      location: 'Universidad, Barcelona',
-      description: 'Mesa redonda sobre las corrientes actuales del arte nigeriano en la diáspora.',
+      locationKey: 'calendar.events.e4.location',
+      descriptionKey: 'calendar.events.e4.description',
       image: '/images/gallery/event-charla.jpg'
     }
   ];
 
   monthLabel = computed(() => {
     const d = this.currentDate();
-    return `${this.monthNames[d.getMonth()]} ${d.getFullYear()}`;
+    const month = this.translate.instant(`calendar.months.m${d.getMonth() + 1}`);
+    return `${month} ${d.getFullYear()}`;
   });
 
   calendarDays = computed<CalendarDay[]>(() => {
@@ -149,8 +159,11 @@ export class Calendar {
   }
 
   formatEventDate(iso: string): string {
+    // Leer la señal aquí mantiene la dependencia reactiva: al cambiar de
+    // idioma la plantilla vuelve a formatear las fechas.
+    const lang = this.translate.currentLang() ?? 'es';
     const [y, m, d] = iso.split('-').map(Number);
-    return new Date(y, m - 1, d).toLocaleDateString('es-ES', {
+    return new Date(y, m - 1, d).toLocaleDateString(DATE_LOCALES[lang] ?? 'es-ES', {
       day: 'numeric',
       month: 'long',
       year: 'numeric'

@@ -1,12 +1,13 @@
 // src/app/features/team/team.ts
 
 import { Component, signal } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 interface TeamMember {
   id: number;
   name: string;
-  role: string;
-  bio: string;
+  roleKey: string;   // clave de traducción, ej. 'team.members.m1.role'
+  bioKey: string;
   initials: string;
   accent: 'green' | 'gold' | 'blue';
   email: string;
@@ -18,7 +19,7 @@ interface TeamMember {
 @Component({
   selector: 'app-team',
   standalone: true,
-  imports: [],
+  imports: [TranslatePipe],
   templateUrl: './team.html',
   styleUrl: './team.scss'
 })
@@ -27,8 +28,8 @@ export class Team {
     {
       id: 1,
       name: 'Nelly Idagba',
-      role: 'Fundadora & Directora Artística',
-      bio: 'Pintora y gestora cultural nacida en Lagos. Fundó Naijart en 2023 con el objetivo de tender puentes entre el arte nigeriano contemporáneo y el público europeo.',
+      roleKey: 'team.members.m1.role',
+      bioKey: 'team.members.m1.bio',
       initials: 'NI',
       accent: 'gold',
       email: 'nelly@naijart.org',
@@ -39,8 +40,8 @@ export class Team {
     {
       id: 2,
       name: 'Carlos García Martínez',
-      role: 'Coordinador de Comunidad',
-      bio: 'Encargado de mantener el vínculo entre los artistas asociados y la comunidad nigeriana en Europa. Organiza los encuentros mensuales.',
+      roleKey: 'team.members.m2.role',
+      bioKey: 'team.members.m2.bio',
       initials: 'CG',
       accent: 'green',
       email: 'carlos@naijart.org',
@@ -50,8 +51,8 @@ export class Team {
     {
       id: 3,
       name: 'Sergio González Montes',
-      role: 'Responsable de Eventos',
-      bio: 'Diseña y coordina exposiciones, ferias y presentaciones en distintas ciudades europeas. Diez años de experiencia en gestión cultural.',
+      roleKey: 'team.members.m3.role',
+      bioKey: 'team.members.m3.bio',
       initials: 'SG',
       accent: 'blue',
       email: 'sergio@naijart.org',
@@ -61,8 +62,8 @@ export class Team {
     {
       id: 4,
       name: 'Emeka Nwosu',
-      role: 'Diseño y Producción',
-      bio: 'Escultor y diseñador. Supervisa la producción y el montaje de las piezas expuestas, cuidando cada detalle técnico.',
+      roleKey: 'team.members.m4.role',
+      bioKey: 'team.members.m4.bio',
       initials: 'EN',
       accent: 'gold',
       email: 'emeka@naijart.org',
@@ -71,8 +72,8 @@ export class Team {
     {
       id: 5,
       name: 'Folake Adeyemi',
-      role: 'Relaciones Institucionales',
-      bio: 'Gestiona alianzas con instituciones culturales, embajadas y galerías europeas para ampliar el alcance de los artistas asociados.',
+      roleKey: 'team.members.m5.role',
+      bioKey: 'team.members.m5.bio',
       initials: 'FA',
       accent: 'green',
       email: 'folake@naijart.org',
@@ -81,8 +82,8 @@ export class Team {
     {
       id: 6,
       name: 'Tunde Bakare',
-      role: 'Redes Sociales & Contenido',
-      bio: 'Fotógrafo y creador de contenido. Es la voz detrás de las redes de Naijart y documenta cada evento y exposición.',
+      roleKey: 'team.members.m6.role',
+      bioKey: 'team.members.m6.bio',
       initials: 'TB',
       accent: 'blue',
       email: 'tunde@naijart.org',

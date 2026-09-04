@@ -2,18 +2,18 @@
   <div class="gallery__container">
 
     <header class="gallery__header">
-      <h1>Galería</h1>
-      <p>Descubre las obras de nuestros artistas</p>
+      <h1>{{ 'gallery.title' | translate }}</h1>
+      <p>{{ 'gallery.subtitle' | translate }}</p>
     </header>
 
-    <nav class="gallery__filters" aria-label="Filtrar por categoría">
+    <nav class="gallery__filters" [attr.aria-label]="'gallery.filterLabel' | translate">
       @for (cat of categories(); track cat) {
         <button
           type="button"
           class="gallery__filter-pill"
           [class.gallery__filter-pill--active]="selectedCategory() === cat"
           (click)="selectCategory(cat)">
-          {{ cat }}
+          {{ categoryLabelKey(cat) | translate }}
         </button>
       }
     </nav>
@@ -24,21 +24,21 @@
           class="gallery__card"
           tabindex="0"
           role="button"
-          [attr.aria-label]="'Ver obra ' + artwork.title"
+          [attr.aria-label]="'gallery.viewArtwork' | translate:{ title: artworkTitle(artwork) }"
           (click)="openLightbox(artwork)"
           (keydown.enter)="openLightbox(artwork)">
           <img
             class="gallery__image"
             [src]="artwork.image"
-            [alt]="artwork.title"
+            [alt]="artworkTitle(artwork)"
             loading="lazy" />
           <div class="gallery__overlay">
-            <h3 class="gallery__overlay-title">{{ artwork.title }}</h3>
+            <h3 class="gallery__overlay-title">{{ artwork.titleKey | translate }}</h3>
             <p class="gallery__overlay-artist">{{ artwork.artist }}</p>
           </div>
         </article>
       } @empty {
-        <p class="gallery__empty">No hay obras en esta categoría todavía.</p>
+        <p class="gallery__empty">{{ 'gallery.empty' | translate }}</p>
       }
     </div>
 
@@ -47,30 +47,34 @@
   @if (lightboxOpen() && currentArtwork(); as artwork) {
     <div class="lightbox" (click)="closeLightbox()">
 
-      <button class="lightbox__close" type="button" aria-label="Cerrar" (click)="closeLightbox()">&times;</button>
+      <button
+        class="lightbox__close"
+        type="button"
+        [attr.aria-label]="'common.close' | translate"
+        (click)="closeLightbox()">&times;</button>
 
       <button
         class="lightbox__nav lightbox__nav--prev"
         type="button"
-        aria-label="Obra anterior"
+        [attr.aria-label]="'gallery.prev' | translate"
         (click)="prev(); $event.stopPropagation()">
         &#8249;
       </button>
 
       <div class="lightbox__content" (click)="$event.stopPropagation()">
-        <img class="lightbox__image" [src]="artwork.image" [alt]="artwork.title" />
+        <img class="lightbox__image" [src]="artwork.image" [alt]="artworkTitle(artwork)" />
         <div class="lightbox__info">
-          <span class="lightbox__category">{{ artwork.category }}</span>
-          <h2>{{ artwork.title }}</h2>
+          <span class="lightbox__category">{{ artwork.categoryKey | translate }}</span>
+          <h2>{{ artwork.titleKey | translate }}</h2>
           <p class="lightbox__artist">{{ artwork.artist }} · {{ artwork.year }}</p>
-          <p class="lightbox__description">{{ artwork.description }}</p>
+          <p class="lightbox__description">{{ artwork.descriptionKey | translate }}</p>
         </div>
       </div>
 
       <button
         class="lightbox__nav lightbox__nav--next"
         type="button"
-        aria-label="Siguiente obra"
+        [attr.aria-label]="'gallery.next' | translate"
         (click)="next(); $event.stopPropagation()">
         &#8250;
       </button>

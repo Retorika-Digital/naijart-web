@@ -5,7 +5,7 @@ export const routes: Routes = [
   {
     path: '',
     component: Home,
-    title: 'NAIJART — Inicio'
+    title: 'titles.home'
   },
 
   // Pendientes de crear el componente (los iremos descomentando):
@@ -13,27 +13,27 @@ export const routes: Routes = [
   {
      path: 'galeria',
      loadComponent: () => import('./features/gallery/gallery').then(m => m.Gallery),
-     title: 'NAIJART — Galería'
+     title: 'titles.gallery'
   },
   {
      path: 'calendario',
      loadComponent: () => import('./features/calendar/calendar').then(m => m.Calendar),
-     title: 'NAIJART — Calendario'
+     title: 'titles.calendar'
    },
   {
      path: 'unete',
      loadComponent: () => import('./features/join/join').then(m => m.Join),
-     title: 'NAIJART — Únete'
+     title: 'titles.join'
    },
    {
      path: 'contacto',
      loadComponent: () => import('./features/contact/contact').then(m => m.Contact),
-     title: 'NAIJART — Contáctanos'
+     title: 'titles.contact'
    },
    {
      path: 'quienes-somos',
      loadComponent: () => import('./features/team/team').then(m => m.Team),
-     title: 'NAIJART — Quienes somos'
+     title: 'titles.about'
    },
   // {
   //   path: 'blog',

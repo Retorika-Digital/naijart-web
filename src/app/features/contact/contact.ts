@@ -1,13 +1,14 @@
 import { Component, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
 
 type SubmitState = 'idle' | 'sending' | 'success' | 'error';
 
 @Component({
   selector: 'app-contact',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, TranslatePipe],
   templateUrl: './contact.html',
   styleUrl: './contact.scss'
 })
@@ -24,10 +25,10 @@ export class Contact {
   });
 
   subjectOptions = [
-    { value: 'general', label: 'Consulta general' },
-    { value: 'colaboracion', label: 'Colaboración / Alianza' },
-    { value: 'prensa', label: 'Prensa' },
-    { value: 'otro', label: 'Otro' }
+    { value: 'general', labelKey: 'contact.subjects.general' },
+    { value: 'colaboracion', labelKey: 'contact.subjects.collaboration' },
+    { value: 'prensa', labelKey: 'contact.subjects.press' },
+    { value: 'otro', labelKey: 'contact.subjects.other' }
   ];
 
   socialLinks = [
@@ -37,9 +38,9 @@ export class Contact {
   ];
 
   scheduleRows = [
-    { day: 'Lunes – Viernes', hours: '9:00 – 18:00 (CET)' },
-    { day: 'Sábado', hours: '10:00 – 14:00 (CET)' },
-    { day: 'Domingo', hours: 'Cerrado' }
+    { dayKey: 'contact.schedule.weekdays', hoursKey: 'contact.schedule.weekdaysHours' },
+    { dayKey: 'contact.schedule.saturday', hoursKey: 'contact.schedule.saturdayHours' },
+    { dayKey: 'contact.schedule.sunday', hoursKey: 'contact.schedule.closed' }
   ];
 
   get name() { return this.contactForm.get('name'); }
